@@ -5,7 +5,7 @@ import com.tmdb.api.config.url.provider.movie.MovieUrlProviderImpl
 import com.tmdb.api.model.util.ApiException
 import com.tmdb.api.model.util.ApiResponse
 import com.tmdb.data.api.implKtor.di.apiErrorMapper
-import com.tmdb.data.api.implKtor.di.module.KtorApiUtilModule
+import com.tmdb.data.api.implKtor.di.module.ApiUtilModule
 import com.tmdb.data.api.implKtor.util.ModelUtil
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
@@ -120,7 +120,7 @@ class MovieApiTest {
                 addHandler(mockRequestHandler)
             }
             install(ContentNegotiation) {
-                json(KtorApiUtilModule.json())
+                json(ApiUtilModule.json())
             }
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { cause, request ->

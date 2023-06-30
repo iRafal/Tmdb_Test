@@ -8,13 +8,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.tmdb.data.db.room.MovieDb
 import com.tmdb.data.db.room.MovieDbMigrations
-import com.tmdb.data.db.room.di.DispatchersTestModule
+import com.tmdb.data.db.room.di.component.app.TestAppComponentStore
+import com.tmdb.data.db.room.di.component.db.TestDbComponent
+import com.tmdb.data.db.room.di.module.DispatchersTestModule
 import com.tmdb.data.db.room.movie.MovieEntity
 import com.tmdb.data.db.room.util.ModelUtil
-import com.tmdb.utill.di.modules.DispatchersModule
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -30,8 +28,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@UninstallModules(DispatchersModule::class)
-@HiltAndroidTest
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class AppDbMigrationTest {
@@ -45,18 +41,18 @@ class AppDbMigrationTest {
     lateinit var context: Context
 
     @get:Rule
-    val hiltRule = HiltAndroidRule(this)
-
-    @get:Rule
     val helper: MigrationTestHelper = MigrationTestHelper(
         InstrumentationRegistry.getInstrumentation(),
         MovieDb::class.java.canonicalName,
         FrameworkSQLiteOpenHelperFactory()
     )
 
+   private lateinit var testDbComponent: TestDbComponent
+
     @Before
     fun setup() {
-        hiltRule.inject()
+        testDbComponent = TestAppComponentStore.component.testDbComponentBuilder.build()
+        testDbComponent.inject(this)
         Dispatchers.setMain(dispatcher)
     }
 
@@ -92,9 +88,11 @@ class AppDbMigrationTest {
         helper.createDatabase(TEST_DB, versionFrom).apply {
             //INFO: db has schema version 1. insert some data using SQL queries.
             //INFO: You cannot use DAO classes because they expect the latest schema.
-            execSQL("INSERT INTO $tableName " +
-                    "($columId, $columnTitle, $columnVoteAverage, $columnReleaseDate, $columnPosterUrl) " +
-                    "VALUES ('$movieId', '$title', '$voteAverage', '$releaseDate', '$posterUrl')")
+            execSQL(
+                "INSERT INTO $tableName " +
+                        "($columId, $columnTitle, $columnVoteAverage, $columnReleaseDate, $columnPosterUrl) " +
+                        "VALUES ('$movieId', '$title', '$voteAverage', '$releaseDate', '$posterUrl')"
+            )
 
             //INFO: Prepare for the next version.
             close()

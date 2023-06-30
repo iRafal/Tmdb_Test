@@ -1,6 +1,5 @@
 plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
-    id(GradleConfig.Plugins.HILT)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
     id(GradleConfig.Plugins.KOTLINX_SERIALIZATION)
@@ -37,12 +36,36 @@ android {
 }
 
 dependencies {
+    apiDependencies()
+    kapt(libs.dagger.compiler)
+    implementationDependencies()
+    testImplementationDependencies()
+}
+
+fun DependencyHandlerScope.apiDependencies() {
     api(project(":data:api:model"))
     implementation(project(":data:api:config"))
+}
 
-    implementation(libs.bundles.data.api.impl.ktor)
-    kapt(libs.hilt.kapt)
+fun DependencyHandlerScope.implementationDependencies() {
+    implementation(project(":util"))
 
+    implementation(libs.kotlin.stdLib)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.coroutines.android)
+    implementation(libs.kotlin.serialization.json)
+
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.logging)
+
+    implementation(libs.dagger)
+}
+
+fun DependencyHandlerScope.testImplementationDependencies() {
     testImplementation(libs.junit)
 
     testImplementation(libs.kotlin.stdLib)

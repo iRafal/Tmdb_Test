@@ -10,6 +10,15 @@ java {
 }
 
 dependencies {
+    apiDependencies()
+    implementationDependencies()
+}
+
+fun DependencyHandlerScope.implementationDependencies() {
+    implementation(libs.kotlin.stdLib)
+    implementation(libs.kotlin.coroutines.core)
+}
+
+fun DependencyHandlerScope.apiDependencies() {
     api(project(":data:api:model"))
-    implementation(libs.bundles.data.source.remote.contract)
 }

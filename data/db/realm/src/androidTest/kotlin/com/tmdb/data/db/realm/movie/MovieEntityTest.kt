@@ -1,13 +1,10 @@
 package com.tmdb.data.db.realm.movie
 
-import com.tmdb.data.db.realm.di.modules.RealmDbModule
-import com.tmdb.data.db.realm.util.ModelUtil
-import com.tmdb.data.db.realm.di.DispatchersTestModule
+import com.tmdb.data.db.realm.di.component.app.TestAppComponentStore
+import com.tmdb.data.db.realm.di.component.db.TestDbComponent
+import com.tmdb.data.db.realm.di.module.DispatchersTestModule
 import com.tmdb.data.db.realm.movie.dao.MovieDao
-import com.tmdb.utill.di.modules.DispatchersModule
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
+import com.tmdb.data.db.realm.util.ModelUtil
 import io.realm.Realm
 import java.io.IOException
 import javax.inject.Inject
@@ -25,17 +22,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 
 
-@UninstallModules(RealmDbModule::class, DispatchersModule::class)
-@HiltAndroidTest
 @OptIn(ExperimentalCoroutinesApi::class)
 class MovieEntityTest {
-
-    @get:Rule
-    val hiltRule = HiltAndroidRule(this)
 
     @Inject
     lateinit var movieDao: MovieDao
@@ -50,9 +41,12 @@ class MovieEntityTest {
     private val movieEntity = ModelUtil.movieEntity
     private val movieId = ModelUtil.movieId
 
+    private lateinit var testDbComponent: TestDbComponent
+
     @Before
     fun setup() {
-        hiltRule.inject()
+        testDbComponent = TestAppComponentStore.component.testDbComponentBuilder.build()
+        testDbComponent.inject(this)
         Dispatchers.setMain(dispatcher)
     }
 

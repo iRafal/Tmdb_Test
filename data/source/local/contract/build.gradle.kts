@@ -37,5 +37,10 @@ android {
 
 dependencies {
     api(project(":data:model"))
-    implementation(libs.bundles.data.source.local.contract)
+    implementationDependencies()
+}
+
+fun DependencyHandlerScope.implementationDependencies() {
+    implementation(libs.kotlin.stdLib)
+    implementation(libs.kotlin.coroutines.core)
 }

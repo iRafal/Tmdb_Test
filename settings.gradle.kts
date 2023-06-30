@@ -21,6 +21,7 @@ include(":store:state")
 include(":store:app")
 
 include(":data:model")
+include(":data:model-mapping")
 
 include(":data:source:local:contract")
 include(":data:source:local:impl")

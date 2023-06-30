@@ -1,10 +1,11 @@
 package com.tmdb.feature.movie.details.ui
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.tmdb.feature.movie.details.ui.MovieDetailsUiEvent.NavigateBack
 import com.tmdb.feature.movie.details.ui.MovieDetailsUiState.Loading
+import com.tmdb.feature.movie.details.ui.di.component.MovieDetailsFeatureComponentStore
+import com.tmdb.ui.core.compose.daggerViewModel
 import com.tmdb.ui.core.navigation.model.NavigationRoute
 import com.tmdb.ui.core.theme.TmdbTheme
 
@@ -12,7 +13,7 @@ import com.tmdb.ui.core.theme.TmdbTheme
 fun MovieDetailsScreen(
     navController: NavController,
     movieId: Int,
-    movieDetailsViewModel: MovieDetailsViewModel = hiltViewModel()
+    movieDetailsViewModel: MovieDetailsViewModel = daggerViewModel { MovieDetailsFeatureComponentStore.component.movieDetailsViewModel }
 ) {
     TmdbTheme {
         val state = Loading

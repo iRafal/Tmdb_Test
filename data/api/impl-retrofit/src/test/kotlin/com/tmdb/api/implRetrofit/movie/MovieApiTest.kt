@@ -1,10 +1,10 @@
 package com.tmdb.api.implRetrofit.movie
 
 import com.tmdb.api.config.url.provider.base.BaseUrlProvider
+import com.tmdb.api.implRetrofit.di.module.ApiFactoriesModule
+import com.tmdb.api.implRetrofit.di.module.ApiHttpClientModule
+import com.tmdb.api.implRetrofit.di.module.ApiJsonModule
 import com.tmdb.api.implRetrofit.di.module.ApiModule
-import com.tmdb.api.implRetrofit.di.module.util.ApiFactoriesModule
-import com.tmdb.api.implRetrofit.di.module.util.ApiHttpClientModule
-import com.tmdb.api.implRetrofit.di.module.util.ApiJsonModule
 import com.tmdb.api.implRetrofit.util.ModelUtil
 import com.tmdb.api.model.data.DataPage
 import com.tmdb.api.model.util.ApiException

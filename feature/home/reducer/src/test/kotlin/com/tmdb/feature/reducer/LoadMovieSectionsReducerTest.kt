@@ -13,6 +13,9 @@ import com.tmdb.data.source.remote.contract.genre.GenreRemoteDataSource
 import com.tmdb.data.source.remote.contract.movie.MovieRemoteDataSource
 import com.tmdb.data.source.remote.contract.person.PersonRemoteDataSource
 import com.tmdb.feature.home.action.HomeAction
+import com.tmdb.feature.home.reducer.HomeFeatureEffects
+import com.tmdb.feature.home.reducer.HomeFeatureSlice
+import com.tmdb.feature.home.reducer.HomeFeatureSliceImpl
 import com.tmdb.feature.reducer.util.ModelUtil
 import com.tmdb.store.state.FeatureState
 import com.tmdb.store.state.app.AppState

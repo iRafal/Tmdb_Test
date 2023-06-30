@@ -2,7 +2,6 @@ plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
-    id(GradleConfig.Plugins.HILT)
 }
 
 android {
@@ -38,15 +37,20 @@ android {
 
 dependencies {
     implementationDependencies()
-    kapt(libs.hilt.kapt)
+    kaptDependencies()
     testImplementation(libs.junit)
+}
+
+fun DependencyHandlerScope.kaptDependencies() {
+    kapt(libs.dagger.compiler)
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
     implementation(project(":data:api:model"))
     implementation(project(":data:api:config"))
+    implementation(project(":util"))
 
+    implementation(libs.dagger)
     implementation(libs.kotlin.stdLib)
-    implementation(libs.hilt.android)
     implementation(libs.kotlinx.dateTime)
 }

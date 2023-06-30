@@ -10,11 +10,9 @@ import com.tmdb.data.source.remote.impl.movie.MovieRemoteDataSourceImpl
 import com.tmdb.data.source.remote.impl.person.PersonRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 
 
-@[Module InstallIn(SingletonComponent::class)]
+@Module
 interface RemoteDataSourceModule {
     @Binds
     fun discoverRemoteDataSource(impl: DiscoverRemoteDataSourceImpl): DiscoverRemoteDataSource

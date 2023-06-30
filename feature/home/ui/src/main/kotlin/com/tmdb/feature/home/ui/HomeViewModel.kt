@@ -10,7 +10,6 @@ import com.tmdb.feature.home.ui.data.model.HomeUiData
 import com.tmdb.store.app.AppStore
 import com.tmdb.store.feature.home.HomeFeature
 import com.tmdb.store.state.app.AppState
-import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,7 +18,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-@HiltViewModel
 class HomeViewModel @Inject constructor(
     private val store: AppStore,
     private val homeFeatureToUiStateMapper: @JvmSuppressWildcards HomeFeatureToUiStateMapper,

@@ -2,7 +2,6 @@ plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
-    id(GradleConfig.Plugins.HILT)
 }
 
 android {
@@ -37,13 +36,29 @@ android {
 }
 
 dependencies {
-    api(project(":data:source:remote:contract"))
+    apiDependencies()
+    kapt(libs.dagger.compiler)
     implementationDependencies()
-    kapt(libs.hilt.kapt)
-    testImplementation(libs.bundles.data.source.remote.impl.test)
+    testImplementationDependencies()
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
+    implementation(libs.kotlin.stdLib)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.coroutines.android)
+    implementation(libs.dagger)
     implementation(project(":data:api:impl-ktor"))
-    implementation(libs.bundles.data.source.remote.impl)
+    implementation(project(":util"))
+}
+
+fun DependencyHandlerScope.apiDependencies() {
+    api(project(":data:source:remote:contract"))
+}
+
+fun DependencyHandlerScope.testImplementationDependencies() {
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlin.coroutines.test)
+    testImplementation(libs.kotlinx.dateTime)
 }

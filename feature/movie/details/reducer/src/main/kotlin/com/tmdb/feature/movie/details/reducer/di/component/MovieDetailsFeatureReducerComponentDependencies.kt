@@ -1,0 +1,3 @@
+package com.tmdb.feature.movie.details.reducer.di.component
+
+interface MovieDetailsFeatureReducerComponentDependencies

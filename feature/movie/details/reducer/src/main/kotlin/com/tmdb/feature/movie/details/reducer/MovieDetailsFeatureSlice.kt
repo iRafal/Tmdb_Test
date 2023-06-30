@@ -9,10 +9,11 @@ import com.tmdb.store.base.feature.FeatureSlice
 import com.tmdb.store.env.contract.AppEnv
 import com.tmdb.store.state.app.AppState
 import com.tmdb.store.state.details.MovieDetailsFeatureState
+import javax.inject.Inject
 
 interface MovieDetailsFeatureSlice : FeatureSlice<AppState, AppEnv, MovieDetailsFeatureState>
 
-class MovieDetailsFeatureSliceImpl : MovieDetailsFeatureSlice {
+class MovieDetailsFeatureSliceImpl @Inject constructor() : MovieDetailsFeatureSlice {
     override val reducer: FeatureReducer<AppState, AppEnv, MovieDetailsFeatureState> =
         { globalState: AppState,
             action: Action ->

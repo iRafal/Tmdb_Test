@@ -2,7 +2,6 @@ plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
-    id(GradleConfig.Plugins.HILT)
     id(GradleConfig.Plugins.REALM)
 }
 
@@ -12,7 +11,7 @@ android {
 
     defaultConfig {
         minSdk = GradleConfig.Android.minSdk
-        testInstrumentationRunner = "${GradleConfig.Android.applicationId}.data.db.realm.runner.HiltTestRunner"
+        testInstrumentationRunner = "${GradleConfig.Android.applicationId}.data.db.realm.runner.DaggerTestRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -45,20 +44,23 @@ android {
 
 dependencies {
     implementationDependencies()
-
-    kapt(libs.hilt.kapt)
-    kaptTest(libs.hilt.kapt)
-    kaptAndroidTest(libs.hilt.kapt)
+    kaptDependencies()
+    kaptAndroidTest(libs.dagger.compiler)
 
     testImplementationDependencies()
 
     androidTestImplementationDependencies()
 }
 
+fun DependencyHandlerScope.kaptDependencies() {
+    kapt(libs.dagger.compiler)
+}
+
 fun DependencyHandlerScope.implementationDependencies() {
     implementation(project(":util"))
 
-    implementation(libs.hilt.android)
+    implementation(libs.dagger)
+
     implementation(libs.realm.plugin)
     implementation(libs.kotlinx.dateTime)
 }
@@ -68,7 +70,6 @@ fun DependencyHandlerScope.testImplementationDependencies() {
     testImplementation(libs.mockito)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlin.coroutines.test)
-    testImplementation(libs.hilt.test)
     testImplementation(libs.kotlinx.dateTime)
 }
 
@@ -78,8 +79,6 @@ fun DependencyHandlerScope.androidTestImplementationDependencies() {
     androidTestImplementation(libs.junit.android.ext)
     androidTestImplementation(libs.espresso)
     androidTestImplementation(libs.kotlin.coroutines.test)
-    androidTestImplementation(libs.hilt.test)
-    androidTestImplementation(libs.hilt.kapt)
     androidTestImplementation(libs.kotlinx.dateTime)
     androidTestImplementation(libs.realm.plugin)
 }

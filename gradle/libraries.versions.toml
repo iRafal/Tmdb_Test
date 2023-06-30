@@ -27,8 +27,11 @@ hilt = "2.46.1"
 # https://developer.android.com/topic/libraries/architecture/workmanager/advanced/custom-configuration
 hilt-work = "1.0.0"
 
-#https://developer.android.com/jetpack/androidx/releases/hilt
+# https://developer.android.com/jetpack/androidx/releases/hilt
 hilt-navigation-compose = "1.0.0"
+
+# https://github.com/google/dagger/releases
+dagger = "2.46.1"
 
 #KOTLIN
 kotlin = "1.8.21" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
@@ -185,79 +188,17 @@ hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hilt-work" }
 hilt-work-kapt = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-work" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+
 [bundles]
 
-#BUNDLES-DATA-API-IMPL-RETROFIT
-data-api-impl-retrofit = [
-    "kotlin-stdLib",
-    "kotlin-coroutines-core",
-    "kotlin-coroutines-android",
-    "kotlin-serialization-json",
-    #
-    "retrofit2",
-    "retrofit2-scalars",
-    "retrofit2-serializationConverter",
-    "okHttp3-loggingInterceptor",
-    #
-    "hilt-android",
-]
-
-#BUNDLES-DATA-API-IMPL-KOTR
-data-api-impl-ktor = [
-    "kotlin-stdLib",
-    "kotlin-coroutines-core",
-    "kotlin-coroutines-android",
-    "kotlin-serialization-json",
-    #
-    "ktor-client-core",
-    "ktor-client-serialization",
-    "ktor-client-android",
-    "ktor-client-content-negotiation",
-    "ktor-client-logging",
-    #
-    "hilt-android",
-    #
-    "logging",
-]
-
-#BUNDLES-DATA-SOURCE-REMOTE-CONTRACT
-data-source-remote-contract = [
-    "kotlin-stdLib",
-    "kotlin-coroutines-core",
-]
-
-#BUNDLES-DATA-SOURCE-REMOTE
-data-source-remote-impl = [
-    "kotlin-stdLib",
-    "kotlin-coroutines-core",
-    "kotlin-coroutines-android",
-    #
-    "hilt-android",
-]
-data-source-remote-impl-test = [
-    "junit",
-    #
-    "mockito",
-    "mockito-kotlin",
-    #
-    "kotlin-coroutines-test",
-    #
-    "kotlinx-dateTime",
-]
-
-#BUNDLES-DATA-SOURCE-LOCAL-CONTRACT
-data-source-local-contract = [
-    "kotlin-stdLib",
-    "kotlin-coroutines-core",
-]
-
-#BUNDLES-DATA-SOURCE-LOCAL
 data-source-local-impl = [
     "kotlin-stdLib",
     "kotlin-coroutines-core",
     "kotlin-coroutines-android",
     #
-    "hilt-android",
+    "dagger",
     #
     "kotlinx-dateTime"
 ]
@@ -268,12 +209,9 @@ data-source-local-impl-test = [
     #
     "kotlin-coroutines-test",
     #
-    "hilt-test",
-    #
     "kotlinx-dateTime"
 ]
 
-#BUNDLES-FEATURE-UI
 feature-ui-impl-test = [
     "junit",
     #
@@ -281,11 +219,8 @@ feature-ui-impl-test = [
     "mockito-kotlin",
     #
     "kotlin-coroutines-test",
-    #
-    "hilt-test"
 ]
 
-#BUNDLES-UI
 ui-test-android = [
     "junit-android-ext",
     #
@@ -295,9 +230,6 @@ ui-test-android = [
     "espresso",
     #
     "kotlin-coroutines-test",
-    #
-    "hilt-test",
-    "hilt-kapt",
     #
     "compose-ui-test-manifest-debug",
     "compose-ui-test-junit"

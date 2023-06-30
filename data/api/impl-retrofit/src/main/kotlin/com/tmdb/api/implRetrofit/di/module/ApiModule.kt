@@ -1,26 +1,26 @@
 package com.tmdb.api.implRetrofit.di.module
 
+import com.tmdb.api.config.url.di.module.UrlProviderModule
 import com.tmdb.api.config.url.provider.base.BaseUrlProvider
-import com.tmdb.api.implRetrofit.di.module.util.ApiFactoriesModule.ConverterFactoryJson
-import com.tmdb.api.implRetrofit.di.module.util.ApiFactoriesModule.ConverterFactoryScalars
-import com.tmdb.api.implRetrofit.di.module.util.ApiHttpClientModule.OkHttpClientRetrofit
+import com.tmdb.api.implRetrofit.di.ApiDependenciesProvider
+import com.tmdb.api.implRetrofit.di.module.ApiFactoriesModule.ConverterFactoryJson
+import com.tmdb.api.implRetrofit.di.module.ApiFactoriesModule.ConverterFactoryScalars
+import com.tmdb.api.implRetrofit.di.module.ApiHttpClientModule.OkHttpClientRetrofit
 import com.tmdb.api.implRetrofit.discover.DiscoverApi
 import com.tmdb.api.implRetrofit.genre.GenreApi
 import com.tmdb.api.implRetrofit.movie.MovieApi
 import com.tmdb.api.implRetrofit.person.PersonApi
+import com.tmdb.utill.di.qualifiers.ApplicationScope
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
 import retrofit2.Converter
 
-
-@[Module InstallIn(SingletonComponent::class)]
+@Module(includes = [ApiFactoriesModule::class, ApiHttpClientModule::class, ApiJsonModule::class, UrlProviderModule::class])
 object ApiModule {
 
-    @Provides
+    @[Provides ApplicationScope]
     fun discoverApi(
         baseUrlProvider: BaseUrlProvider,
         @OkHttpClientRetrofit client: OkHttpClient,
@@ -36,7 +36,7 @@ object ApiModule {
         apiClass = DiscoverApi::class.java
     )
 
-    @Provides
+    @[Provides ApplicationScope]
     fun genreApi(
         baseUrlProvider: BaseUrlProvider,
         @OkHttpClientRetrofit client: OkHttpClient,
@@ -52,7 +52,7 @@ object ApiModule {
         apiClass = GenreApi::class.java
     )
 
-    @Provides
+    @[Provides ApplicationScope]
     fun movieApi(
         baseUrlProvider: BaseUrlProvider,
         @OkHttpClientRetrofit client: OkHttpClient,
@@ -68,7 +68,7 @@ object ApiModule {
         apiClass = MovieApi::class.java
     )
 
-    @Provides
+    @[Provides ApplicationScope]
     fun personApi(
         baseUrlProvider: BaseUrlProvider,
         @OkHttpClientRetrofit client: OkHttpClient,

@@ -7,7 +7,10 @@ import androidx.navigation.compose.rememberNavController
 import com.tmdb.ui.core.navigation.model.NavigationRoute.Home
 
 @Composable
-fun AppNavigation(navController: NavHostController = rememberNavController(), onClose: () -> Unit) {
+fun AppNavigation(
+    navController: NavHostController = rememberNavController(),
+    onClose: () -> Unit
+) {
     NavHost(
         navController = navController,
         startDestination = Home.route

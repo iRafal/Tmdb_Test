@@ -2,7 +2,6 @@ plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
-    id(GradleConfig.Plugins.HILT)
 }
 
 android {
@@ -11,7 +10,7 @@ android {
 
     defaultConfig {
         minSdk = GradleConfig.Android.minSdk
-        testInstrumentationRunner = "${GradleConfig.Android.applicationId}.data.db.room.runner.HiltTestRunner"
+        testInstrumentationRunner = "${GradleConfig.Android.applicationId}.data.db.room.runner.DaggerTestRunner"
         consumerProguardFiles("consumer-rules.pro")
         javaCompileOptions {
             annotationProcessorOptions {
@@ -53,31 +52,29 @@ android {
 
 dependencies {
     implementationDependencies()
-
     kaptDependencies()
-
-    kaptTest(libs.hilt.kapt)
-    kaptAndroidTest(libs.hilt.kapt)
-
+    kaptAndroidTest(libs.room.compiler)
     testImplementationDependencies()
-
     androidTestImplementationDependencies()
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
+    implementation(project(":util"))
+
     implementation(libs.kotlin.stdLib)
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
 
-    implementation(libs.hilt.android)
+    implementation(libs.dagger)
+
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     implementation(libs.kotlinx.dateTime)
 }
 
 fun DependencyHandlerScope.kaptDependencies() {
-    kapt(libs.hilt.kapt)
     kapt(libs.room.compiler)
+    kapt(libs.dagger.compiler)
 }
 
 fun DependencyHandlerScope.testImplementationDependencies() {
@@ -85,7 +82,6 @@ fun DependencyHandlerScope.testImplementationDependencies() {
     testImplementation(libs.mockito)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlin.coroutines.test)
-    testImplementation(libs.hilt.test)
     testImplementation(libs.kotlinx.dateTime)
 }
 
@@ -96,8 +92,6 @@ fun DependencyHandlerScope.androidTestImplementationDependencies() {
     androidTestImplementation(libs.espresso)
     androidTestImplementation(libs.room.test)
     androidTestImplementation(libs.kotlin.coroutines.test)
-    androidTestImplementation(libs.hilt.test)
-    androidTestImplementation(libs.hilt.kapt)
     androidTestImplementation(libs.kotlinx.dateTime)
 }
 

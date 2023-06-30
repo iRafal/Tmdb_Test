@@ -10,7 +10,6 @@ buildscript {
         classpath(libs.ktlint.plugin)
         classpath(libs.kotlin.gradle)
         classpath(libs.kotlin.serialization)
-        classpath(libs.hilt.plugin)
         classpath(libs.realm.plugin)
         classpath(libs.objectBox)
         classpath(libs.detekt)
@@ -29,6 +28,16 @@ allprojects {
      */
     apply(plugin = "io.gitlab.arturbosch.detekt")
 }
+
+/**
+ * Run all tests
+ * https://developer.android.com/studio/test/command-line
+ *
+ * ./gradlew test
+ *
+ * ./gradlew connectedAndroidTest
+ * ./gradlew cAT
+ */
 
 /**
  * Mac

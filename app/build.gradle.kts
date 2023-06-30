@@ -2,7 +2,6 @@ plugins {
     id(GradleConfig.Plugins.ANDROID_APPLICATION)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
-    id(GradleConfig.Plugins.HILT)
 }
 
 android {
@@ -28,10 +27,22 @@ android {
 
             isShrinkResources = GradleConfig.Android.isShrinkResourcesDebug
             isMinifyEnabled = GradleConfig.Android.isMinifyEnabledDebug
+
+            kapt {
+                arguments {
+                    arg("dagger.formatGeneratedSource", "disabled")
+                }
+            }
         }
         getByName("release") {
             isShrinkResources = GradleConfig.Android.isShrinkResourcesRelease
             isMinifyEnabled = GradleConfig.Android.isMinifyEnabledRelease
+
+            kapt {
+                arguments {
+                    arg("dagger.formatGeneratedSource", "enabled")
+                }
+            }
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -64,6 +75,13 @@ android {
     }
 }
 
+kapt {
+    arguments {
+        arg("dagger.fastInit", "enabled")
+        arg("dagger.fullBindingGraphValidator", "ERROR") //"WARNING"
+    }
+}
+
 // Ktlint manual integration
 // val ktlint by configurations.creating
 
@@ -85,16 +103,15 @@ dependencies {
 
 fun DependencyHandlerScope.implementationDependencies() {
     implementation(project(":ui"))
+    implementation(project(":util"))
+    implementation(project(":store:app"))
 
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.work)
-
+    implementation(libs.dagger)
     implementation(libs.androidx.work.runtime)
 }
 
 fun DependencyHandlerScope.kaptDependencies() {
-    kapt(libs.hilt.kapt)
-    kapt(libs.hilt.work.kapt)
+    kapt(libs.dagger.compiler)
 }
 
 fun DependencyHandlerScope.debugImplementationDependencies() {

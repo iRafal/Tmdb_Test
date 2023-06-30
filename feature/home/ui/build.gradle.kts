@@ -2,7 +2,6 @@ plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
-    id(GradleConfig.Plugins.HILT)
 }
 
 android {
@@ -12,7 +11,7 @@ android {
 
     defaultConfig {
         minSdk = GradleConfig.Android.minSdk
-        testInstrumentationRunner = "$nameSpace.runner.HiltTestRunner"
+        testInstrumentationRunner = "$nameSpace.runner.DaggerTestRunner"
         consumerProguardFiles("consumer-rules.pro")
         vectorDrawables {
             useSupportLibrary = true
@@ -51,20 +50,16 @@ android {
     }
 }
 
-hilt {
-    enableAggregatingTask = true
-}
-
 dependencies {
     implementationDependencies()
-
-    kapt(libs.hilt.kapt)
-    kaptTest(libs.hilt.kapt)
-    kaptAndroidTest(libs.hilt.kapt)
-
+    kaptDependencies()
+    kaptAndroidTest(libs.dagger.compiler)
     testImplementation(libs.bundles.feature.ui.impl.test)
-
     androidTestImplementation(libs.bundles.ui.test.android)
+}
+
+fun DependencyHandlerScope.kaptDependencies() {
+    kapt(libs.dagger.compiler)
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
@@ -72,5 +67,5 @@ fun DependencyHandlerScope.implementationDependencies() {
     implementation(project(":util"))
     implementation(project(":store:app"))
 
-    implementation(libs.hilt.android)
+    implementation(libs.dagger)
 }

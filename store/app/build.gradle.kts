@@ -2,7 +2,6 @@ plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
-    id(GradleConfig.Plugins.HILT)
 }
 
 android {
@@ -38,23 +37,24 @@ android {
 dependencies {
     implementationDependencies()
     apiDependencies()
-    kapt(libs.hilt.kapt)
+    kaptDependencies()
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
-    implementation(project(":store:reducer:app"))
     implementation(project(":util"))
-
-    implementation(libs.hilt.android)
+    implementation(libs.dagger)
 }
 
 fun DependencyHandlerScope.apiDependencies() {
+    api(project(":store:reducer:app"))
     api(project(":store:base"))
-    api(project(":store:env"))
     api(project(":store:state"))
+    api(project(":store:env"))
     api(project(":store:feature"))
-
     api(project(":feature:home:action"))
-
     api(project(":data:model"))
+}
+
+fun DependencyHandlerScope.kaptDependencies() {
+    kapt(libs.dagger.compiler)
 }

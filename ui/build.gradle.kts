@@ -2,7 +2,6 @@ plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
-    id(GradleConfig.Plugins.HILT)
 }
 
 android {
@@ -11,7 +10,7 @@ android {
 
     defaultConfig {
         minSdk = GradleConfig.Android.minSdk
-        testInstrumentationRunner = "${GradleConfig.Android.applicationId}.ui.core.runner.HiltTestRunner"
+        testInstrumentationRunner = "${GradleConfig.Android.applicationId}.ui.runner.DaggerTestRunner"
         consumerProguardFiles("consumer-rules.pro")
         vectorDrawables {
             useSupportLibrary = true
@@ -53,8 +52,7 @@ dependencies {
 
     kaptDependencies()
 
-    kaptTest(libs.hilt.kapt)
-    kaptAndroidTest(libs.hilt.kapt)
+    kaptAndroidTest(libs.dagger.compiler)
 
     testImplementationDependencies()
 
@@ -70,15 +68,16 @@ fun DependencyHandlerScope.apiDependencies() {
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
-    implementation(libs.hilt.android)
+    implementation(libs.dagger)
 
+    implementation(project(":util"))
+    implementation(project(":store:app"))
     implementation(project(":feature:home:ui"))
     implementation(project(":feature:movie:details:ui"))
 }
 
 fun DependencyHandlerScope.kaptDependencies() {
-    kapt(libs.hilt.kapt)
-    kapt(libs.hilt.work.kapt)
+    kapt(libs.dagger.compiler)
 }
 
 fun DependencyHandlerScope.testImplementationDependencies() {
@@ -88,8 +87,6 @@ fun DependencyHandlerScope.testImplementationDependencies() {
     testImplementation(libs.mockito.kotlin)
 
     testImplementation(libs.kotlin.coroutines.test)
-
-    testImplementation(libs.hilt.test)
 }
 
 fun DependencyHandlerScope.androidTestImplementationDependencies() {
@@ -99,8 +96,7 @@ fun DependencyHandlerScope.androidTestImplementationDependencies() {
 
     androidTestImplementation(libs.kotlin.coroutines.test)
 
-    androidTestImplementation(libs.hilt.test)
-    androidTestImplementation(libs.hilt.kapt)
+    androidTestImplementation(libs.dagger.compiler)
 
     androidTestImplementation(libs.compose.ui.test.manifest.debug)
     androidTestImplementation(libs.compose.ui.test.junit)

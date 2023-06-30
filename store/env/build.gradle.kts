@@ -2,7 +2,6 @@ plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
-    id(GradleConfig.Plugins.HILT)
 }
 
 android {
@@ -37,12 +36,17 @@ android {
 
 dependencies {
     implementationDependencies()
-    kapt(libs.hilt.kapt)
+    kaptDependencies()
+}
+
+fun DependencyHandlerScope.kaptDependencies() {
+    kapt(libs.dagger.compiler)
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
     implementation(project(":data:source:remote:contract"))
     implementation(project(":data:source:local:contract"))
+    implementation(project(":util"))
 
     // INFO: choose one of networking libraries
     //    api(project(":data:source:remote:impl"))
@@ -57,5 +61,5 @@ fun DependencyHandlerScope.implementationDependencies() {
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
 
-    implementation(libs.hilt.android)
+    implementation(libs.dagger)
 }

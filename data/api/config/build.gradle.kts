@@ -2,7 +2,6 @@ import java.util.Properties
 
 plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
-    id(GradleConfig.Plugins.HILT)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
 }
@@ -49,17 +48,21 @@ android {
 
 dependencies {
     implementationDependencies()
-    kapt(libs.hilt.kapt)
+    kaptDependencies()
     testImplementationDependencies()
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
     implementation(libs.kotlin.stdLib)
-    implementation(libs.hilt.android)
+    implementation(libs.dagger)
 }
 
 fun DependencyHandlerScope.testImplementationDependencies() {
     testImplementation(libs.junit)
     testImplementation(libs.mockito)
     testImplementation(libs.mockito.kotlin)
+}
+
+fun DependencyHandlerScope.kaptDependencies() {
+    kapt(libs.dagger.compiler)
 }

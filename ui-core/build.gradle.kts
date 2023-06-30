@@ -2,7 +2,6 @@ plugins {
     id(GradleConfig.Plugins.ANDROID_LIBRARY)
     id(GradleConfig.Plugins.KOTLIN_ANDROID)
     id(GradleConfig.Plugins.KOTLIN_KAPT)
-    id(GradleConfig.Plugins.HILT)
 }
 
 android {
@@ -49,14 +48,18 @@ dependencies {
     implementationDependencies()
     apiDependencies()
     debugApiDependencies()
-    kapt(libs.hilt.kapt)
+    kaptDependencies()
     testImplementation(libs.junit)
     androidTestImplementation(libs.bundles.ui.test.android)
 }
 
+fun DependencyHandlerScope.kaptDependencies() {
+    kapt(libs.dagger.compiler)
+}
+
 fun DependencyHandlerScope.implementationDependencies() {
     implementation(project(":store:state"))
-    implementation(libs.hilt.android)
+    implementation(libs.dagger)
 }
 
 fun DependencyHandlerScope.apiDependencies() {
@@ -82,8 +85,6 @@ fun DependencyHandlerScope.apiDependencies() {
 
     api(libs.logging)
     api(libs.kotlinx.dateTime)
-
-    api(libs.hilt.navigation.compose)
 }
 
 fun DependencyHandlerScope.debugApiDependencies() {
