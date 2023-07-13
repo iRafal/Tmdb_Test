@@ -6,7 +6,7 @@ import com.tmdb.api.model.movie.MovieStatus.RELEASED
 import com.tmdb.api.model.movie.ProductionCompany
 import com.tmdb.api.model.movie.ProductionCountry
 import com.tmdb.api.model.movie.SpokenLanguage
-import com.tmdb.data.model.movie.MovieDataModel
+import com.tmdb.data.model.MovieDataModel
 import kotlinx.datetime.LocalDate
 
 object ModelUtil {

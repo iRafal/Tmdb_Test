@@ -1,23 +1,17 @@
 package com.tmdb.data.source.remote.impl.di.component
 
-import com.tmdb.data.source.remote.contract.discover.DiscoverRemoteDataSource
-import com.tmdb.data.source.remote.contract.genre.GenreRemoteDataSource
-import com.tmdb.data.source.remote.contract.movie.MovieRemoteDataSource
-import com.tmdb.data.source.remote.contract.person.PersonRemoteDataSource
+import com.tmdb.api.implRetrofit.di.component.ApiInjections
 import com.tmdb.data.source.remote.impl.di.module.RemoteDataSourceModule
+import com.tmdb.utill.di.qualifiers.ApplicationScope
 import dagger.Component
 
-
-@Component(modules = [RemoteDataSourceModule::class], dependencies = [RemoteDataSourceComponentDependencies::class])
-interface RemoteDataSourceComponent {
-    val discoverRemoteDataSource: DiscoverRemoteDataSource
-    val genreRemoteDataSource: GenreRemoteDataSource
-    val movieRemoteDataSource: MovieRemoteDataSource
-    val personRemoteDataSource: PersonRemoteDataSource
+@ApplicationScope
+@Component(modules = [RemoteDataSourceModule::class], dependencies = [ApiInjections::class])
+interface RemoteDataSourceComponent: RemoteDataSourceInjections {
 
     @Component.Builder
     interface Builder {
-        fun dependencies(dependencies: RemoteDataSourceComponentDependencies): Builder
+        fun apiInjections(dependencies: ApiInjections): Builder
         fun build(): RemoteDataSourceComponent
     }
 }

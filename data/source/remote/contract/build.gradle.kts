@@ -21,4 +21,5 @@ fun DependencyHandlerScope.implementationDependencies() {
 
 fun DependencyHandlerScope.apiDependencies() {
     api(project(":data:api:model"))
+    api(project(":data:model"))
 }

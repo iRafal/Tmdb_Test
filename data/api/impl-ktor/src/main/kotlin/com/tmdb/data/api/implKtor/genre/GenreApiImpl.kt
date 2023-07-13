@@ -1,7 +1,6 @@
 package com.tmdb.data.api.implKtor.genre
 
 import com.tmdb.api.config.url.provider.genre.GenreUrlProvider
-import com.tmdb.api.model.genre.Genre
 import com.tmdb.api.model.genre.GenresList
 import com.tmdb.api.model.util.ApiResponse
 import com.tmdb.api.model.util.NetworkErrorModel
@@ -18,17 +17,17 @@ class GenreApiImpl @Inject constructor(
 ) : GenreApi {
     override suspend fun genreMovieList(
         language: String?
-    ): ApiResponse<List<Genre>, NetworkErrorModel> = runApiCall {
+    ): ApiResponse<GenresList, NetworkErrorModel> = runApiCall {
         client.get(urlProvider.genreMovieListUrl) {
             parameter("language", language)
-        }.body<GenresList>().genres
+        }.body()
     }
 
     override suspend fun genreTvList(
         language: String?
-    ): ApiResponse<List<Genre>, NetworkErrorModel> = runApiCall {
+    ): ApiResponse<GenresList, NetworkErrorModel> = runApiCall {
         client.get(urlProvider.genreTvListUrl) {
             parameter("language", language)
-        }.body<GenresList>().genres
+        }.body()
     }
 }

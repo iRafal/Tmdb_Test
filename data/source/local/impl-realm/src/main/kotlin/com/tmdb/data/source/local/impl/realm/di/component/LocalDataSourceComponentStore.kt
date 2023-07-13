@@ -1,8 +1,6 @@
 package com.tmdb.data.source.local.impl.realm.di.component
 
 import android.content.Context
-import com.tmdb.data.db.realm.di.component.DbComponentStore
-import com.tmdb.data.db.realm.movie.dao.MovieDao
 import com.tmdb.utill.di.qualifiers.ApplicationContext
 
 object LocalDataSourceComponentStore {
@@ -12,18 +10,10 @@ object LocalDataSourceComponentStore {
 
     fun init(@ApplicationContext applicationContext: Context) {
         if (_component != null) return
-
-        DbComponentStore.init(applicationContext)
-
-        val dependencies = object : LocalDataSourceComponentDependencies {
-            override val movieDao: MovieDao
-                get() = DbComponentStore.component.movieDao
-        }
-        _component = DaggerLocalDataSourceComponent.builder().dependencies(dependencies).build()
+        _component = DaggerLocalDataSourceComponent.builder().appContext(applicationContext).build()
     }
 
     fun clean() {
         _component = null
-        DbComponentStore.clean()
     }
 }

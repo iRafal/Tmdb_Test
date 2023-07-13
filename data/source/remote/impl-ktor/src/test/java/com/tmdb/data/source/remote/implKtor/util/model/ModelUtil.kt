@@ -8,9 +8,22 @@ import com.tmdb.api.model.movie.ProductionCountry
 import com.tmdb.api.model.movie.SpokenLanguage
 import com.tmdb.api.model.person.Person
 import com.tmdb.api.model.person.PersonGender.MALE
+import com.tmdb.data.model.MovieDataModel
+import com.tmdb.data.model.PersonDataModel
 import kotlinx.datetime.LocalDate
 
 object ModelUtil {
+
+    const val movieId = 550
+    const val title = "Fight Club"
+    const val voteAverage = 7.8
+    val releaseDate = LocalDate.parse("1999-10-12")
+    const val posterUrl = "https://web.page.com/w500/posterUrl"
+    const val isNowPlaying = false
+    const val isNowPopular = false
+    const val isTopRated = false
+    const val isUpcoming = false
+
     val movieModel = Movie(
         isAdult = false,
         backdropPath = "/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg",
@@ -18,13 +31,13 @@ object ModelUtil {
         budget = 63000000.0,
         genres = listOf(Genre(id = 18, name = "Drama")),
         homepage = "",
-        id = 550,
+        id = movieId,
         imdbId = "tt0137523",
         originalLanguage = "en",
-        originalTitle = "Fight Club",
+        originalTitle = title,
         overview = "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.", // ktlint-disable max-line-length
         popularity = 0.5,
-        posterPath = null,
+        posterPath = "posterUrl",
         productionCompanies = listOf(
             ProductionCompany(
                 id = 508,
@@ -45,16 +58,24 @@ object ModelUtil {
                 name = "United States of America"
             )
         ),
-        releaseDate = LocalDate.parse("1999-10-12"),
+        releaseDate = releaseDate,
         revenue = 100853753,
         runtime = 139,
         spokenLanguages = listOf(SpokenLanguage(iso_639_1 = "en", name = "English")),
         status = RELEASED,
         tagline = "How much can you know about yourself if you've never been in a fight?",
-        title = "Fight Club",
+        title = title,
         isVideo = false,
-        voteAverage = 7.8,
+        voteAverage = voteAverage,
         voteCount = 3439
+    )
+
+    val movieDataModel = MovieDataModel(
+        id = movieId,
+        title = title,
+        voteAverage = voteAverage,
+        releaseDate = releaseDate,
+        posterUrl = posterUrl
     )
 
     val personModel = Person(
@@ -84,4 +105,6 @@ object ModelUtil {
         imdbId = "nm0000093",
         homepage = null
     )
+
+    val personDataModel = PersonDataModel()
 }

@@ -3,9 +3,16 @@ package com.tmdb.data.source.remote.impl.genre
 import com.tmdb.api.implRetrofit.genre.GenreApi
 import com.tmdb.api.model.genre.Genre
 import com.tmdb.api.model.genre.GenresList
+import com.tmdb.api.model.util.ApiException
 import com.tmdb.api.model.util.ApiResponse
+import com.tmdb.api.model.util.NetworkErrorModel
+import com.tmdb.data.model.GenreDataModel
+import com.tmdb.data.model.state.DataState
 import com.tmdb.data.source.remote.contract.genre.GenreRemoteDataSource
+import com.tmdb.data.source.remote.impl.mapping.GenreListApiModelToDataStateModelMapper
+import com.tmdb.data.source.remote.impl.util.model.ApiErrorImpl
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -16,65 +23,165 @@ import org.mockito.kotlin.whenever
 
 class GenreRemoteDataSourceTest {
     private val genreApi = mock<GenreApi>()
-    private val genreSource: GenreRemoteDataSource = GenreRemoteDataSourceImpl(genreApi)
+    private val genreListApiModelToDataStateModelMapper: GenreListApiModelToDataStateModelMapper = mock()
+    private val genreSource: GenreRemoteDataSource = GenreRemoteDataSourceImpl(genreApi, genreListApiModelToDataStateModelMapper)
 
-    private val genreList = listOf(Genre(id = 28, name = "Action"))
-    private val genreListApiResponse = ApiResponse.Success(GenresList(genreList))
-    private val genreListDataSourceResponse = ApiResponse.Success(genreList)
+    private val expectedApiGenreModel = Genre(id = 28, name = "Action")
+    private val expectedGenreDataModel = GenreDataModel()
+
+    private val expectedApiGenreList = GenresList(listOf(expectedApiGenreModel))
+    private val expectedGenreDataModelList = listOf(expectedGenreDataModel)
+
+    private val expectedSuccessApiResponse: ApiResponse<GenresList, NetworkErrorModel> = ApiResponse.Success(expectedApiGenreList)
+
+    private val expectedNetworkException = ApiException.NetworkError(message = "Network error")
+    private val expectedNetworkErrorApiResponse = ApiResponse.NetworkError(expectedNetworkException)
+
+    private val expectedErrorBody = ApiErrorImpl()
+    private val expectedErrorCode = 500
+    private val expectedApiErrorException = Throwable("Body: [${expectedErrorBody}], code=${expectedErrorCode}")
+    private val expectedApiErrorResponse = ApiResponse.ApiError(expectedErrorBody, expectedErrorCode)
+
+    private val expectedUnknownException = Throwable("Unknown Exception")
+    private val expectedUnknownErrorResponse = ApiResponse.UnknownError(expectedUnknownException)
 
     @Test
     fun `genre tv list success`() = runTest {
-        whenever(genreApi.genreTvList()).thenReturn(genreListApiResponse)
-        genreSource.genreTvList().run { assertEquals(this, genreListDataSourceResponse) }
+        val expectedDataState: DataState<List<GenreDataModel>> = DataState.Success(expectedGenreDataModelList)
+
+        whenever(genreListApiModelToDataStateModelMapper.invoke(expectedSuccessApiResponse)).thenReturn(expectedDataState)
+        whenever(genreApi.genreTvList()).thenReturn(expectedSuccessApiResponse)
+
+        genreSource.genreTvList().run {
+            assertTrue(this.isSuccess)
+            Assert.assertSame(expectedDataState, this)
+        }
+
         verify(genreApi, times(1)).genreTvList()
+        verify(genreListApiModelToDataStateModelMapper, times(1)).invoke(expectedSuccessApiResponse)
     }
 
     @Test
     fun `genre tv list network error`() = runTest {
-        whenever(genreApi.genreTvList()).thenReturn(ApiResponse.NetworkError())
-        genreSource.genreTvList().run { assertTrue(this.isNetworkError) }
+        val expectedException = expectedNetworkException
+        val expectedDataState: DataState<List<GenreDataModel>> = DataState.NetworkError(expectedException)
+        val expectedApiResponse = expectedNetworkErrorApiResponse
+
+        whenever(genreListApiModelToDataStateModelMapper.invoke(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(genreApi.genreTvList()).thenReturn(expectedApiResponse)
+
+        genreSource.genreTvList().run {
+            assertTrue(this.isNetworkError)
+            Assert.assertSame(expectedDataState, this)
+        }
+
         verify(genreApi, times(1)).genreTvList()
+        verify(genreListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
     }
 
     @Test
     fun `genre tv list api error`() = runTest {
-        whenever(genreApi.genreTvList()).thenReturn(ApiResponse.ApiError())
-        genreSource.genreTvList().run { assertTrue(this.isApiError) }
+        val expectedException = expectedApiErrorException
+        val expectedDataState: DataState<List<GenreDataModel>> = DataState.Error(expectedException)
+        val expectedApiResponse: ApiResponse<GenresList, NetworkErrorModel> = expectedApiErrorResponse
+
+        whenever(genreListApiModelToDataStateModelMapper(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(genreApi.genreTvList()).thenReturn(expectedApiResponse)
+
+        genreSource.genreTvList().run {
+            assertTrue(this.isError)
+            Assert.assertSame(expectedDataState, this)
+        }
+
         verify(genreApi, times(1)).genreTvList()
+        verify(genreListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
     }
 
     @Test
     fun `genre tv list unknown error`() = runTest {
-        whenever(genreApi.genreTvList()).thenReturn(ApiResponse.UnknownError())
-        genreSource.genreTvList().run { assertTrue(this.isUnknownError) }
+        val expectedException = expectedUnknownException
+        val expectedDataState: DataState<List<GenreDataModel>> = DataState.Error(expectedException)
+        val expectedApiResponse: ApiResponse<GenresList, NetworkErrorModel> = expectedUnknownErrorResponse
+
+        whenever(genreListApiModelToDataStateModelMapper(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(genreApi.genreTvList()).thenReturn(expectedApiResponse)
+
+        genreSource.genreTvList().run {
+            assertTrue(this.isError)
+            Assert.assertSame(expectedDataState, this)
+        }
+
         verify(genreApi, times(1)).genreTvList()
+        verify(genreListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
     }
 
     @Test
     fun `genre movie list success`() = runTest {
-        whenever(genreApi.genreMovieList()).thenReturn(genreListApiResponse)
-        genreSource.genreMovieList().run { assertEquals(this, genreListDataSourceResponse) }
+        val expectedDataState: DataState<List<GenreDataModel>> = DataState.Success(expectedGenreDataModelList)
+
+        whenever(genreListApiModelToDataStateModelMapper.invoke(expectedSuccessApiResponse)).thenReturn(expectedDataState)
+        whenever(genreApi.genreMovieList()).thenReturn(expectedSuccessApiResponse)
+
+        genreSource.genreMovieList().run {
+            assertTrue(this.isSuccess)
+            Assert.assertSame(expectedDataState, this)
+        }
+
         verify(genreApi, times(1)).genreMovieList()
+        verify(genreListApiModelToDataStateModelMapper, times(1)).invoke(expectedSuccessApiResponse)
     }
 
     @Test
     fun `genre movie list network error`() = runTest {
-        whenever(genreApi.genreTvList()).thenReturn(ApiResponse.NetworkError())
-        genreSource.genreTvList().run { assertTrue(this.isNetworkError) }
+        val expectedException = expectedNetworkException
+        val expectedDataState: DataState<List<GenreDataModel>> = DataState.NetworkError(expectedException)
+        val expectedApiResponse = expectedNetworkErrorApiResponse
+
+        whenever(genreListApiModelToDataStateModelMapper.invoke(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(genreApi.genreTvList()).thenReturn(expectedApiResponse)
+
+        genreSource.genreTvList().run {
+            assertTrue(this.isNetworkError)
+            Assert.assertSame(expectedDataState, this)
+        }
+
         verify(genreApi, times(1)).genreTvList()
+        verify(genreListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
     }
 
     @Test
     fun `genre movie list api error`() = runTest {
-        whenever(genreApi.genreMovieList()).thenReturn(ApiResponse.ApiError())
-        genreSource.genreMovieList().run { assertTrue(this.isApiError) }
+        val expectedException = expectedApiErrorException
+        val expectedDataState: DataState<List<GenreDataModel>> = DataState.Error(expectedException)
+        val expectedApiResponse: ApiResponse<GenresList, NetworkErrorModel> = expectedApiErrorResponse
+
+        whenever(genreListApiModelToDataStateModelMapper(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(genreApi.genreMovieList()).thenReturn(expectedApiResponse)
+
+        genreSource.genreMovieList().run {
+            assertTrue(this.isError)
+            Assert.assertSame(expectedDataState, this)
+        }
+
         verify(genreApi, times(1)).genreMovieList()
+        verify(genreListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
     }
 
     @Test
     fun `genre movie list unknown error`() = runTest {
-        whenever(genreApi.genreMovieList()).thenReturn(ApiResponse.UnknownError())
-        genreSource.genreMovieList().run { assertTrue(this.isUnknownError) }
+        val expectedException = expectedUnknownException
+        val expectedDataState: DataState<List<GenreDataModel>> = DataState.Error(expectedException)
+        val expectedApiResponse: ApiResponse<GenresList, NetworkErrorModel> = expectedUnknownErrorResponse
+
+        whenever(genreListApiModelToDataStateModelMapper(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(genreApi.genreMovieList()).thenReturn(expectedApiResponse)
+
+        genreSource.genreMovieList().run {
+            assertTrue(this.isError)
+            Assert.assertSame(expectedDataState, this)
+        }
+
         verify(genreApi, times(1)).genreMovieList()
+        verify(genreListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
     }
 }

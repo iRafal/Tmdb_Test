@@ -24,7 +24,7 @@ interface TestAppComponent {
 
     val testDbComponentBuilder: TestDbComponent.Builder
 
-    @dagger.Component.Builder
+    @Component.Builder
     interface Builder {
         fun build(): TestAppComponent
     }

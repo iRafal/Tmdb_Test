@@ -28,6 +28,7 @@ import com.tmdb.feature.home.ui.data.model.HomeMovieSection.UPCOMING
 import com.tmdb.feature.home.ui.data.model.HomeUiData
 import com.tmdb.feature.home.ui.data.model.HomeUiData.Movie
 import com.tmdb.feature.home.ui.di.TestAppComponentStore
+import com.tmdb.feature.home.ui.di.component.HomeFeatureComponentProvider
 import com.tmdb.ui.core.compose.ComposeTestTags
 import com.tmdb.ui.core.data.UiState
 import com.tmdb.ui.core.data.UiState.Success

@@ -1,17 +1,17 @@
 package com.tmdb.ui.core.data.mapping
 
-import com.tmdb.store.state.FeatureState
+import com.tmdb.data.model.state.DataState
 import com.tmdb.ui.core.data.UiState
 
-typealias FeatureToUiStateMapper<T, R> = (FeatureState<T>) -> UiState<R>
+typealias DataStateToUiStateMapper<T, R> = (DataState<T>?) -> UiState<R>
 
-fun <T, R> mapFeatureToUiState(dataMapper: (T) -> R): FeatureToUiStateMapper<T, R> {
+fun <T, R> mapDataStateToUiState(dataMapper: (T) -> R): DataStateToUiStateMapper<T, R> {
     return { featureState ->
         when (featureState) {
-            is FeatureState.Loading -> UiState.Loading()
-            is FeatureState.Success -> UiState.Success(dataMapper(featureState.data))
-            is FeatureState.Error -> UiState.Error()
-            is FeatureState.NetworkError -> UiState.NetworkError()
+            is DataState.Success -> UiState.Success(dataMapper(featureState.data))
+            is DataState.Error -> UiState.Error()
+            is DataState.NetworkError -> UiState.NetworkError()
+            else -> UiState.Loading()
         }
     }
 }

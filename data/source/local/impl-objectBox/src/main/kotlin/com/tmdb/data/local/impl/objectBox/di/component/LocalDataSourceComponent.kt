@@ -1,18 +1,19 @@
 package com.tmdb.data.local.impl.objectBox.di.component
 
+import android.content.Context
 import com.tmdb.data.local.impl.objectBox.di.module.LocalDataSourceModule
-import com.tmdb.data.source.remote.contract.MovieLocalDataSource
+import com.tmdb.utill.di.qualifiers.ApplicationContext
 import com.tmdb.utill.di.qualifiers.ApplicationScope
+import dagger.BindsInstance
 import dagger.Component
 
 
-@[ApplicationScope Component(modules = [LocalDataSourceModule::class], dependencies = [LocalDataSourceComponentDependencies::class])]
-interface LocalDataSourceComponent {
-    val movieLocalDataSource: MovieLocalDataSource
-
+@[ApplicationScope Component(modules = [LocalDataSourceModule::class])]
+interface LocalDataSourceComponent: LocalDataSourceInjections {
     @Component.Builder
     interface Builder {
-        fun dependencies(dependencies: LocalDataSourceComponentDependencies): Builder
+        @BindsInstance
+        fun appContext(@ApplicationContext dependency: Context): Builder
         fun build(): LocalDataSourceComponent
     }
 }

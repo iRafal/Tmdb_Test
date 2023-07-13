@@ -2,7 +2,7 @@ package com.tmdb.data.source.local.impl.realm
 
 import com.tmdb.data.db.realm.movie.MovieEntity
 import com.tmdb.data.db.realm.movie.dao.MovieDao
-import com.tmdb.data.model.movie.MovieDataModel
+import com.tmdb.data.model.MovieDataModel
 import com.tmdb.data.source.local.impl.realm.mapping.MovieDataModelToEntityMapper
 import com.tmdb.data.source.local.impl.realm.mapping.MovieEntityToDataModelMapper
 import com.tmdb.data.source.remote.contract.MovieLocalDataSource

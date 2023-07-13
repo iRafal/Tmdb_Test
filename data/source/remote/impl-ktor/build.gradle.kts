@@ -46,8 +46,10 @@ fun DependencyHandlerScope.implementationDependencies() {
     implementation(libs.kotlin.stdLib)
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
+    implementation(libs.kotlinx.dateTime)
     implementation(libs.dagger)
     implementation(project(":data:api:impl-ktor"))
+    implementation(project(":data:api:config"))
     implementation(project(":util"))
 }
 

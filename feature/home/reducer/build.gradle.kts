@@ -1,48 +1,17 @@
 plugins {
-    id(GradleConfig.Plugins.ANDROID_LIBRARY)
-    id(GradleConfig.Plugins.KOTLIN_ANDROID)
-    id(GradleConfig.Plugins.KOTLIN_KAPT)
+    id(GradleConfig.Plugins.JAVA_LIBRARY)
+    id(GradleConfig.Plugins.KOTLIN)
+    id(GradleConfig.Plugins.KOTLIN_JVM)
 }
 
-android {
-    namespace = "${GradleConfig.Android.applicationId}.feature.reducer"
-    compileSdk = GradleConfig.Android.compileSdk
-
-    defaultConfig {
-        minSdk = GradleConfig.Android.minSdk
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        debug {
-            isMinifyEnabled = GradleConfig.Android.isMinifyEnabledDebug
-        }
-        release {
-            isMinifyEnabled = GradleConfig.Android.isMinifyEnabledRelease
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            consumerProguardFiles("consumer-rules.pro")
-        }
-    }
-    compileOptions {
-        sourceCompatibility = GradleConfig.javaVersion
-        targetCompatibility = GradleConfig.javaVersion
-    }
-    kotlinOptions {
-        jvmTarget = GradleConfig.javaVersionAsString
-    }
+java {
+    sourceCompatibility = GradleConfig.javaVersion
+    targetCompatibility = GradleConfig.javaVersion
 }
 
 dependencies {
     implementationDependencies()
-    kaptDependencies()
     testImplementationDependencies()
-}
-
-fun DependencyHandlerScope.kaptDependencies() {
-    kapt(libs.dagger.compiler)
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
@@ -50,14 +19,12 @@ fun DependencyHandlerScope.implementationDependencies() {
     implementation(project(":store:env"))
     implementation(project(":store:feature"))
     implementation(project(":store:state"))
-    implementation(project(":feature:home:action"))
+    implementation(project(":store:action"))
     implementation(project(":data:source:remote:contract"))
     implementation(project(":data:source:local:contract"))
     implementation(project(":data:model"))
-    implementation(project(":data:model-mapping"))
-    implementation(project(":util"))
-
-    implementation(libs.dagger)
+    implementation(libs.kotlin.stdLib)
+    implementation(libs.kotlin.coroutines.core)
 }
 
 fun DependencyHandlerScope.testImplementationDependencies() {

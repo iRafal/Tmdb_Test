@@ -4,7 +4,7 @@ import com.tmdb.data.db.objectBox.movie.MovieEntity
 import com.tmdb.data.db.objectBox.movie.dao.MovieDao
 import com.tmdb.data.local.impl.objectBox.mapping.MovieDataModelToEntityMapper
 import com.tmdb.data.local.impl.objectBox.mapping.MovieEntityToDataModelMapper
-import com.tmdb.data.model.movie.MovieDataModel
+import com.tmdb.data.model.MovieDataModel
 import com.tmdb.data.source.remote.contract.MovieLocalDataSource
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow

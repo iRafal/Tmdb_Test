@@ -5,14 +5,24 @@ import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import coil.Coil
 import coil.ImageLoader
-import com.tmdb.di.component.AppComponent
-import com.tmdb.di.component.AppComponentStore
+import com.tmdb.di.component.app.AppComponent
+import com.tmdb.di.component.app.AppComponentStore
+import com.tmdb.di.component.store.AppStoreComponentStore
+import com.tmdb.feature.home.ui.di.component.DaggerHomeFeatureComponent
+import com.tmdb.feature.home.ui.di.component.HomeFeatureComponent
+import com.tmdb.feature.home.ui.di.component.HomeFeatureComponentDependencies
+import com.tmdb.feature.home.ui.di.component.HomeFeatureComponentProvider
+import com.tmdb.feature.movie.details.ui.di.component.DaggerMovieDetailsFeatureComponent
+import com.tmdb.feature.movie.details.ui.di.component.MovieDetailsFeatureComponent
+import com.tmdb.feature.movie.details.ui.di.component.MovieDetailsFeatureComponentDependencies
+import com.tmdb.feature.movie.details.ui.di.component.MovieDetailsFeatureComponentProvider
+import com.tmdb.store.app.AppStore
 import com.tmdb.util.logging.AndroidReleaseLogcatLogger
 import com.tmdb.utill.di.qualifiers.ApplicationScope
 import javax.inject.Inject
 import logcat.AndroidLogcatLogger
 
-class MovieApp : Application()/*, Configuration.Provider*/ {
+class MovieApp : Application(), HomeFeatureComponentProvider, MovieDetailsFeatureComponentProvider/*, Configuration.Provider*/ {
 
     //TODO
 //    @Inject
@@ -22,7 +32,24 @@ class MovieApp : Application()/*, Configuration.Provider*/ {
     @ApplicationScope
     lateinit var coilImageLoader: ImageLoader
 
-    internal lateinit var appComponent: AppComponent
+    val appComponent: AppComponent
+        get() = AppComponentStore.component
+
+    override val homeFeatureComponent: HomeFeatureComponent
+        get() = DaggerHomeFeatureComponent.builder().dependencies(
+            object : HomeFeatureComponentDependencies {
+                override val appStore: AppStore
+                    get() = AppStoreComponentStore.component.appStore
+            }
+        ).build()
+
+    override val movieDetailsFeatureComponent: MovieDetailsFeatureComponent
+        get() = DaggerMovieDetailsFeatureComponent.builder().dependencies(
+            object : MovieDetailsFeatureComponentDependencies {
+                override val appStore: AppStore
+                    get() = AppStoreComponentStore.component.appStore
+            }
+        ).build()
 
     override fun onCreate() {
         super.onCreate()
@@ -30,7 +57,7 @@ class MovieApp : Application()/*, Configuration.Provider*/ {
 //        initIoStrictPolicy()
 
         AppComponentStore.init(this)
-        appComponent = AppComponentStore.component.also { it.inject(this) }
+        AppComponentStore.component.inject(this)
 
         initCoil()
     }

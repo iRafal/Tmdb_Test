@@ -1,6 +1,6 @@
 package com.tmdb.data.source.remote.contract
 
-import com.tmdb.data.model.movie.MovieDataModel
+import com.tmdb.data.model.MovieDataModel
 import kotlinx.coroutines.flow.Flow
 
 interface MovieLocalDataSource {

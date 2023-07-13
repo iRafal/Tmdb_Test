@@ -12,7 +12,7 @@ import dagger.Binds
 import dagger.Module
 
 
-@Module
+@Module(includes = [MovieMappingModule::class, PersonMappingModule::class, GenreMappingModule::class])
 interface RemoteDataSourceModule {
     @Binds
     fun discoverRemoteDataSource(impl: DiscoverRemoteDataSourceImpl): DiscoverRemoteDataSource

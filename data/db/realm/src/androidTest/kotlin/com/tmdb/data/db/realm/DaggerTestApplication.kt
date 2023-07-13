@@ -4,11 +4,6 @@ import android.app.Application
 import com.tmdb.data.db.realm.di.component.app.TestAppComponentStore
 
 open class DaggerTestApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        TestAppComponentStore.init()
-    }
-
     override fun onTerminate() {
         super.onTerminate()
         TestAppComponentStore.clean()

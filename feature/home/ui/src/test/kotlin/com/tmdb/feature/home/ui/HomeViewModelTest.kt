@@ -1,6 +1,6 @@
 package com.tmdb.feature.home.ui
 
-import com.tmdb.feature.home.ui.data.mapping.HomeFeatureToUiStateMapper
+import com.tmdb.feature.home.ui.data.mapping.HomeFeatureStateToUiStateMapper
 import com.tmdb.feature.home.ui.data.mapping.HomeMovieSectionToActionMapper
 import com.tmdb.feature.home.ui.data.model.HomeUiData
 import com.tmdb.store.app.AppStore
@@ -22,11 +22,11 @@ class HomeViewModelTest {
     private val dispatcher = StandardTestDispatcher()
 
     private val appStore = mock<AppStore>()
-    private val homeFeatureToUiStateMapper = mock<HomeFeatureToUiStateMapper>()
+    private val homeFeatureStateToUiStateMapper = mock<HomeFeatureStateToUiStateMapper>()
     private val homeMovieSectionToActionMapper = mock<HomeMovieSectionToActionMapper>()
     private val viewModel = HomeViewModel(
         appStore,
-        homeFeatureToUiStateMapper,
+        homeFeatureStateToUiStateMapper,
         homeMovieSectionToActionMapper
     )
 

@@ -8,9 +8,19 @@ import com.tmdb.api.model.movie.ProductionCountry
 import com.tmdb.api.model.movie.SpokenLanguage
 import com.tmdb.api.model.person.Person
 import com.tmdb.api.model.person.PersonGender.MALE
+import com.tmdb.data.model.MovieDataModel
+import com.tmdb.data.model.PersonDataModel
 import kotlinx.datetime.LocalDate
 
 object ModelUtil {
+    val movieDataModel = MovieDataModel(
+        id = 550,
+        title = "Fight Club",
+        voteAverage = 7.8,
+        releaseDate = LocalDate.parse("1999-10-12"),
+        posterUrl = null
+    )
+
     val movieModel = Movie(
         isAdult = false,
         backdropPath = "/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg",
@@ -84,4 +94,6 @@ object ModelUtil {
         imdbId = "nm0000093",
         homepage = null
     )
+
+    val personDataModel = PersonDataModel()
 }

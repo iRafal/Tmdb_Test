@@ -4,11 +4,6 @@ import android.app.Application
 import com.tmdb.feature.home.ui.di.TestAppComponentStore
 
 open class DaggerTestApplication: Application() {
-    override fun onCreate() {
-        super.onCreate()
-        TestAppComponentStore.init()
-    }
-
     override fun onTerminate() {
         super.onTerminate()
         TestAppComponentStore.clean()

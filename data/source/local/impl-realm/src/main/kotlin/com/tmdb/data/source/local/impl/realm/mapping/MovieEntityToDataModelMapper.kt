@@ -1,7 +1,7 @@
 package com.tmdb.data.source.local.impl.realm.mapping
 
 import com.tmdb.data.db.realm.movie.MovieEntity
-import com.tmdb.data.model.movie.MovieDataModel
+import com.tmdb.data.model.MovieDataModel
 
 typealias MovieEntityToDataModelMapper = (input: MovieEntity) -> MovieDataModel
 

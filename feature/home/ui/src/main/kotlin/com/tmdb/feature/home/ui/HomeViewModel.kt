@@ -2,11 +2,11 @@ package com.tmdb.feature.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tmdb.feature.home.action.HomeAction
-import com.tmdb.feature.home.ui.data.mapping.HomeFeatureToUiStateMapper
+import com.tmdb.feature.home.ui.data.mapping.HomeFeatureStateToUiStateMapper
 import com.tmdb.feature.home.ui.data.mapping.HomeMovieSectionToActionMapper
 import com.tmdb.feature.home.ui.data.model.HomeMovieSection
 import com.tmdb.feature.home.ui.data.model.HomeUiData
+import com.tmdb.store.action.HomeAction
 import com.tmdb.store.app.AppStore
 import com.tmdb.store.feature.home.HomeFeature
 import com.tmdb.store.state.app.AppState
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.stateIn
 
 class HomeViewModel @Inject constructor(
     private val store: AppStore,
-    private val homeFeatureToUiStateMapper: @JvmSuppressWildcards HomeFeatureToUiStateMapper,
+    private val homeFeatureStateToUiStateMapper: @JvmSuppressWildcards HomeFeatureStateToUiStateMapper,
     private val homeMovieSectionToActionMapper: @JvmSuppressWildcards HomeMovieSectionToActionMapper
 ) : ViewModel() {
 
@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(
     private val state: StateFlow<AppState> = store.stateFlow
 
     val uiStateFlow: StateFlow<HomeUiData> = state
-        .map { appState -> homeFeatureToUiStateMapper(appState.homeState) }
+        .map { appState -> homeFeatureStateToUiStateMapper(appState.homeState) }
         .flowOn(Dispatchers.IO)
         .stateIn(viewModelScope, SharingStarted.Eagerly, HomeUiData.INITIAL)
 

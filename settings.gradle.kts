@@ -10,7 +10,6 @@ rootProject.name = "Tmdb"
 rootProject.buildFileName = "build.gradle.kts"
 include(":app")
 
-include(":ui")
 include(":ui-core")
 
 include(":store:base")
@@ -18,10 +17,10 @@ include(":store:feature")
 include(":store:env")
 include(":store:reducer:app")
 include(":store:state")
+include(":store:action")
 include(":store:app")
 
 include(":data:model")
-include(":data:model-mapping")
 
 include(":data:source:local:contract")
 include(":data:source:local:impl")
@@ -45,8 +44,6 @@ include(":util")
 
 include(":feature:home:ui")
 include(":feature:home:reducer")
-include(":feature:home:action")
 
 include(":feature:movie:details:ui")
 include(":feature:movie:details:reducer")
-include(":feature:movie:details:action")

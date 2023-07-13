@@ -1,6 +1,6 @@
 package com.tmdb.feature.home.ui.data.mapping
 
-import com.tmdb.data.model.movie.MovieDataModel
+import com.tmdb.data.model.MovieDataModel
 import com.tmdb.feature.home.ui.data.model.HomeUiData
 
 typealias MovieDataToHomeModelMapper = (input: MovieDataModel) -> HomeUiData.Movie

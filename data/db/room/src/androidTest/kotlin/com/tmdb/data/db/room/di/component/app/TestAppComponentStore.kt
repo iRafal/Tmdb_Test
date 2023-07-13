@@ -1,7 +1,5 @@
 package com.tmdb.data.db.room.di.component.app
 
-import com.tmdb.data.db.room.di.component.DbComponentStore
-
 object TestAppComponentStore {
     private var _component: TestAppComponent? = null
     val component: TestAppComponent
@@ -9,12 +7,10 @@ object TestAppComponentStore {
 
     fun init() {
         if (_component != null) return
-
         _component = DaggerTestAppComponent.builder().build()
     }
 
     fun clean() {
         _component = null
-        DbComponentStore.clean()
     }
 }

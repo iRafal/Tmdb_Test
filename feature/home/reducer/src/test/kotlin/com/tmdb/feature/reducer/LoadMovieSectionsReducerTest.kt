@@ -1,23 +1,18 @@
 package com.tmdb.feature.reducer
 
-import com.tmdb.api.model.data.DataPage
-import com.tmdb.api.model.movie.Movie
 import com.tmdb.api.model.util.ApiException
-import com.tmdb.api.model.util.ApiResponse
-import com.tmdb.api.model.util.NetworkErrorModel
-import com.tmdb.data.model.movie.MovieDataModel
+import com.tmdb.data.model.MovieDataModel
 import com.tmdb.data.model.state.DataState
 import com.tmdb.data.source.remote.contract.MovieLocalDataSource
 import com.tmdb.data.source.remote.contract.discover.DiscoverRemoteDataSource
 import com.tmdb.data.source.remote.contract.genre.GenreRemoteDataSource
 import com.tmdb.data.source.remote.contract.movie.MovieRemoteDataSource
 import com.tmdb.data.source.remote.contract.person.PersonRemoteDataSource
-import com.tmdb.feature.home.action.HomeAction
 import com.tmdb.feature.home.reducer.HomeFeatureEffects
 import com.tmdb.feature.home.reducer.HomeFeatureSlice
 import com.tmdb.feature.home.reducer.HomeFeatureSliceImpl
 import com.tmdb.feature.reducer.util.ModelUtil
-import com.tmdb.store.state.FeatureState
+import com.tmdb.store.action.HomeAction
 import com.tmdb.store.state.app.AppState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -41,38 +36,26 @@ class LoadMovieSectionsReducerTest {
 
     @Test
     fun `reduce load movie sections success`() = runTest {
-        val movies = listOf(ModelUtil.movieDataModel)
-        val successResult = ApiResponse.Success(
-            DataPage(
-                page = 1,
-                results = listOf(ModelUtil.movieModel),
-                totalPages = 1,
-                totalResults = 1
-            )
-        )
-
-        val appState = AppState.INITIAL
-        val dataSuccessMovies = DataState.Success(movies)
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(
-            moviesApiToDataStateMapper = { dataSuccessMovies },
-            moviesDataToFeatureStateMapper = { FeatureState.Success(movies) },
-            homeFeatureEffects
-        )
-        val (homeFeatureState, effect) = homeFeatureSlice.reducer(
-            appState,
-            HomeAction.LoadMovieSections
-        )
+        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val appState = AppState.INITIAL
+        val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, HomeAction.LoadMovieSections)
 
-        assertTrue(homeFeatureState.nowPlayingMoviesState.isLoading)
-        assertTrue(homeFeatureState.nowPopularMoviesState.isLoading)
-        assertTrue(homeFeatureState.topRatedMoviesState.isLoading)
-        assertTrue(homeFeatureState.upcomingMoviesState.isLoading)
+        with(homeFeatureState) {
+            assertTrue(nowPlayingMovies.isLoading)
+            assertTrue(nowPopularMovies.isLoading)
+            assertTrue(topRatedMovies.isLoading)
+            assertTrue(upcomingMovies.isLoading)
+        }
 
-        whenever(movieRemoteSource.nowPlayingMovies()).thenReturn(successResult)
-        whenever(movieRemoteSource.nowPopularMovies()).thenReturn(successResult)
-        whenever(movieRemoteSource.topRatedMovies()).thenReturn(successResult)
-        whenever(movieRemoteSource.upcomingMovies()).thenReturn(successResult)
+        val movies = listOf(ModelUtil.movieDataModel)
+        val dataSuccessMovies = DataState.Success(movies)
+        with(movieRemoteSource) {
+            whenever(nowPlayingMovies()).thenReturn(dataSuccessMovies)
+            whenever(nowPopularMovies()).thenReturn(dataSuccessMovies)
+            whenever(topRatedMovies()).thenReturn(dataSuccessMovies)
+            whenever(upcomingMovies()).thenReturn(dataSuccessMovies)
+        }
 
         val executor = createMockEffectExecutor(
             discoverRemoteSource,
@@ -83,10 +66,12 @@ class LoadMovieSectionsReducerTest {
         )
         effect?.invoke(executor)
 
-        verify(movieRemoteSource, times(1)).nowPlayingMovies()
-        verify(movieRemoteSource, times(1)).nowPopularMovies()
-        verify(movieRemoteSource, times(1)).topRatedMovies()
-        verify(movieRemoteSource, times(1)).upcomingMovies()
+        with(movieRemoteSource) {
+            verify(this, times(1)).nowPlayingMovies()
+            verify(this, times(1)).nowPopularMovies()
+            verify(this, times(1)).topRatedMovies()
+            verify(this, times(1)).upcomingMovies()
+        }
 
         verify(executor.effectExecutorScope).dispatch(
             HomeAction.MovieSectionsLoaded(
@@ -100,30 +85,25 @@ class LoadMovieSectionsReducerTest {
 
     @Test
     fun `reduce load movie sections api error`() = runTest {
-        val apiErrorResult: ApiResponse<DataPage<Movie>, NetworkErrorModel> = ApiResponse.ApiError()
-
-        val appState = AppState.INITIAL
-        val dataErrorMovies = DataState.Error<List<MovieDataModel>>(ApiException.BadRequest())
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(
-            moviesApiToDataStateMapper = { dataErrorMovies },
-            moviesDataToFeatureStateMapper = { FeatureState.Error() },
-            homeFeatureEffects
-        )
-        val (homeFeatureState, effect) = homeFeatureSlice.reducer(
-            appState,
-            HomeAction.LoadMovieSections
-        )
+        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val appState = AppState.INITIAL
+        val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, HomeAction.LoadMovieSections)
 
-        assertTrue(homeFeatureState.nowPlayingMoviesState.isLoading)
-        assertTrue(homeFeatureState.nowPopularMoviesState.isLoading)
-        assertTrue(homeFeatureState.topRatedMoviesState.isLoading)
-        assertTrue(homeFeatureState.upcomingMoviesState.isLoading)
+        with(homeFeatureState) {
+            assertTrue(nowPlayingMovies.isLoading)
+            assertTrue(nowPopularMovies.isLoading)
+            assertTrue(topRatedMovies.isLoading)
+            assertTrue(upcomingMovies.isLoading)
+        }
 
-        whenever(movieRemoteSource.nowPlayingMovies()).thenReturn(apiErrorResult)
-        whenever(movieRemoteSource.nowPopularMovies()).thenReturn(apiErrorResult)
-        whenever(movieRemoteSource.topRatedMovies()).thenReturn(apiErrorResult)
-        whenever(movieRemoteSource.upcomingMovies()).thenReturn(apiErrorResult)
+        val dataErrorMovies = DataState.Error<List<MovieDataModel>>(ApiException.BadRequest())
+        with(movieRemoteSource) {
+            whenever(nowPlayingMovies()).thenReturn(dataErrorMovies)
+            whenever(nowPopularMovies()).thenReturn(dataErrorMovies)
+            whenever(topRatedMovies()).thenReturn(dataErrorMovies)
+            whenever(upcomingMovies()).thenReturn(dataErrorMovies)
+        }
 
         val executor = createMockEffectExecutor(
             discoverRemoteSource,
@@ -134,10 +114,12 @@ class LoadMovieSectionsReducerTest {
         )
         effect?.invoke(executor)
 
-        verify(movieRemoteSource, times(1)).nowPlayingMovies()
-        verify(movieRemoteSource, times(1)).nowPopularMovies()
-        verify(movieRemoteSource, times(1)).topRatedMovies()
-        verify(movieRemoteSource, times(1)).upcomingMovies()
+        with(movieRemoteSource) {
+            verify(this, times(1)).nowPlayingMovies()
+            verify(this, times(1)).nowPopularMovies()
+            verify(this, times(1)).topRatedMovies()
+            verify(this, times(1)).upcomingMovies()
+        }
 
         verify(executor.effectExecutorScope).dispatch(
             HomeAction.MovieSectionsLoaded(
@@ -151,32 +133,25 @@ class LoadMovieSectionsReducerTest {
 
     @Test
     fun `reduce load movie sections network error`() = runTest {
-        val networkErrorResult: ApiResponse<DataPage<Movie>, NetworkErrorModel> =
-            ApiResponse.NetworkError()
-
-        val appState = AppState.INITIAL
-        val dataErrorMovies =
-            DataState.NetworkError<List<MovieDataModel>>(ApiException.NetworkError())
+        val dataErrorMovies = DataState.NetworkError<List<MovieDataModel>>(ApiException.NetworkError())
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(
-            moviesApiToDataStateMapper = { dataErrorMovies },
-            moviesDataToFeatureStateMapper = { FeatureState.NetworkError() },
-            homeFeatureEffects
-        )
-        val (homeFeatureState, effect) = homeFeatureSlice.reducer(
-            appState,
-            HomeAction.LoadMovieSections
-        )
+        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val appState = AppState.INITIAL
+        val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, HomeAction.LoadMovieSections)
 
-        assertTrue(homeFeatureState.nowPlayingMoviesState.isLoading)
-        assertTrue(homeFeatureState.nowPopularMoviesState.isLoading)
-        assertTrue(homeFeatureState.topRatedMoviesState.isLoading)
-        assertTrue(homeFeatureState.upcomingMoviesState.isLoading)
+        with(homeFeatureState) {
+            assertTrue(nowPlayingMovies.isLoading)
+            assertTrue(nowPopularMovies.isLoading)
+            assertTrue(topRatedMovies.isLoading)
+            assertTrue(upcomingMovies.isLoading)
+        }
 
-        whenever(movieRemoteSource.nowPlayingMovies()).thenReturn(networkErrorResult)
-        whenever(movieRemoteSource.nowPopularMovies()).thenReturn(networkErrorResult)
-        whenever(movieRemoteSource.topRatedMovies()).thenReturn(networkErrorResult)
-        whenever(movieRemoteSource.upcomingMovies()).thenReturn(networkErrorResult)
+        with(movieRemoteSource) {
+            whenever(nowPlayingMovies()).thenReturn(dataErrorMovies)
+            whenever(nowPopularMovies()).thenReturn(dataErrorMovies)
+            whenever(topRatedMovies()).thenReturn(dataErrorMovies)
+            whenever(upcomingMovies()).thenReturn(dataErrorMovies)
+        }
 
         val executor = createMockEffectExecutor(
             discoverRemoteSource,
@@ -187,10 +162,12 @@ class LoadMovieSectionsReducerTest {
         )
         effect?.invoke(executor)
 
-        verify(movieRemoteSource, times(1)).nowPlayingMovies()
-        verify(movieRemoteSource, times(1)).nowPopularMovies()
-        verify(movieRemoteSource, times(1)).topRatedMovies()
-        verify(movieRemoteSource, times(1)).upcomingMovies()
+        with(movieRemoteSource) {
+            verify(this, times(1)).nowPlayingMovies()
+            verify(this, times(1)).nowPopularMovies()
+            verify(this, times(1)).topRatedMovies()
+            verify(this, times(1)).upcomingMovies()
+        }
 
         verify(executor.effectExecutorScope).dispatch(
             HomeAction.MovieSectionsLoaded(
@@ -204,31 +181,25 @@ class LoadMovieSectionsReducerTest {
 
     @Test
     fun `reduce load movie sections unknown error`() = runTest {
-        val unknownErrorResult: ApiResponse<DataPage<Movie>, NetworkErrorModel> =
-            ApiResponse.UnknownError()
-
-        val appState = AppState.INITIAL
         val dataErrorMovies = DataState.Error<List<MovieDataModel>>(ApiException.UnknownError())
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(
-            moviesApiToDataStateMapper = { dataErrorMovies },
-            moviesDataToFeatureStateMapper = { FeatureState.NetworkError() },
-            homeFeatureEffects
-        )
-        val (homeFeatureState, effect) = homeFeatureSlice.reducer(
-            appState,
-            HomeAction.LoadMovieSections
-        )
+        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val appState = AppState.INITIAL
+        val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, HomeAction.LoadMovieSections)
 
-        assertTrue(homeFeatureState.nowPlayingMoviesState.isLoading)
-        assertTrue(homeFeatureState.nowPopularMoviesState.isLoading)
-        assertTrue(homeFeatureState.topRatedMoviesState.isLoading)
-        assertTrue(homeFeatureState.upcomingMoviesState.isLoading)
+        with(homeFeatureState) {
+            assertTrue(nowPlayingMovies.isLoading)
+            assertTrue(nowPopularMovies.isLoading)
+            assertTrue(topRatedMovies.isLoading)
+            assertTrue(upcomingMovies.isLoading)
+        }
 
-        whenever(movieRemoteSource.nowPlayingMovies()).thenReturn(unknownErrorResult)
-        whenever(movieRemoteSource.nowPopularMovies()).thenReturn(unknownErrorResult)
-        whenever(movieRemoteSource.topRatedMovies()).thenReturn(unknownErrorResult)
-        whenever(movieRemoteSource.upcomingMovies()).thenReturn(unknownErrorResult)
+        with(movieRemoteSource) {
+            whenever(nowPlayingMovies()).thenReturn(dataErrorMovies)
+            whenever(nowPopularMovies()).thenReturn(dataErrorMovies)
+            whenever(topRatedMovies()).thenReturn(dataErrorMovies)
+            whenever(upcomingMovies()).thenReturn(dataErrorMovies)
+        }
 
         val executor = createMockEffectExecutor(
             discoverRemoteSource,
@@ -239,10 +210,12 @@ class LoadMovieSectionsReducerTest {
         )
         effect?.invoke(executor)
 
-        verify(movieRemoteSource, times(1)).nowPlayingMovies()
-        verify(movieRemoteSource, times(1)).nowPopularMovies()
-        verify(movieRemoteSource, times(1)).topRatedMovies()
-        verify(movieRemoteSource, times(1)).upcomingMovies()
+        with(movieRemoteSource) {
+            verify(this, times(1)).nowPlayingMovies()
+            verify(this, times(1)).nowPopularMovies()
+            verify(this, times(1)).topRatedMovies()
+            verify(this, times(1)).upcomingMovies()
+        }
 
         verify(executor.effectExecutorScope).dispatch(
             HomeAction.MovieSectionsLoaded(

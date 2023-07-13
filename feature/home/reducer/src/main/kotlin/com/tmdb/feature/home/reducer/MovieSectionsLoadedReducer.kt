@@ -1,21 +1,19 @@
 package com.tmdb.feature.home.reducer
 
-import com.tmdb.feature.home.action.HomeAction
+import com.tmdb.store.action.HomeAction
 import com.tmdb.store.base.Effect
 import com.tmdb.store.base.Effects
 import com.tmdb.store.env.contract.AppEnv
 import com.tmdb.store.state.home.HomeFeatureState
-import com.tmdb.store.state.home.MoviesDataToFeatureStateMapper
 
 fun HomeFeatureState.reduceMovieSectionsLoaded(
     action: HomeAction.MovieSectionsLoaded,
-    mapper: MoviesDataToFeatureStateMapper
 ): Pair<HomeFeatureState, Effect<AppEnv>?> {
     val newState = this.copy(
-        nowPlayingMoviesState = mapper(action.nowPlayingMovies),
-        nowPopularMoviesState = mapper(action.nowPopularMovies),
-        topRatedMoviesState = mapper(action.topRatedMovies),
-        upcomingMoviesState = mapper(action.upcomingMovies)
+        nowPlayingMovies = this.nowPlayingMovies.copy(isLoading = false, movies = action.nowPlayingMovies),
+        nowPopularMovies = this.nowPopularMovies.copy(isLoading = false, movies = action.nowPopularMovies),
+        topRatedMovies = this.topRatedMovies.copy(isLoading = false, movies = action.topRatedMovies),
+        upcomingMovies = this.upcomingMovies.copy(isLoading = false, movies = action.upcomingMovies),
     )
     return newState to Effects.empty()
 }

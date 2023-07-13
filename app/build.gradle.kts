@@ -12,6 +12,8 @@ android {
         minSdk = GradleConfig.Android.minSdk
         targetSdk = GradleConfig.Android.targetSdk
 
+        testInstrumentationRunner = "${GradleConfig.Android.applicationId}.runner.DaggerTestRunner"
+
         versionCode = 1
         versionName = Version(major = 1, minor = 0, patch = 0).name
 
@@ -95,6 +97,8 @@ dependencies {
 //        // ktlint(project(":custom-ktlint-ruleset")) // in case of custom ruleset
 //    }
     implementationDependencies()
+    testImplementationDependencies()
+    androidTestImplementationDependencies()
 
     kaptDependencies()
 
@@ -102,9 +106,17 @@ dependencies {
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
-    implementation(project(":ui"))
     implementation(project(":util"))
     implementation(project(":store:app"))
+    implementation(project(":data:source:local:contract"))
+    implementation(project(":data:source:local:impl"))
+    implementation(project(":data:source:remote:contract"))
+    implementation(project(":data:source:remote:impl-ktor"))
+
+    implementation(project(":feature:home:ui"))
+    implementation(project(":feature:movie:details:ui"))
+
+    implementation(project(":ui-core"))
 
     implementation(libs.dagger)
     implementation(libs.androidx.work.runtime)
@@ -116,6 +128,28 @@ fun DependencyHandlerScope.kaptDependencies() {
 
 fun DependencyHandlerScope.debugImplementationDependencies() {
     debugImplementation(libs.leakCanary.debug)
+}
+
+fun DependencyHandlerScope.testImplementationDependencies() {
+    testImplementation(libs.junit)
+
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockito.kotlin)
+
+    testImplementation(libs.kotlin.coroutines.test)
+}
+
+fun DependencyHandlerScope.androidTestImplementationDependencies() {
+    androidTestImplementation(libs.junit.android.ext)
+
+    androidTestImplementation(libs.espresso)
+
+    androidTestImplementation(libs.kotlin.coroutines.test)
+
+    androidTestImplementation(libs.dagger.compiler)
+
+    androidTestImplementation(libs.compose.ui.test.manifest.debug)
+    androidTestImplementation(libs.compose.ui.test.junit)
 }
 
 // Ktlint manual integration

@@ -1,7 +1,7 @@
 package com.tmdb.data.local.impl.objectBox.mapping
 
 import com.tmdb.data.db.objectBox.movie.MovieEntity
-import com.tmdb.data.model.movie.MovieDataModel
+import com.tmdb.data.model.MovieDataModel
 
 typealias MovieDataModelToEntityMapper = (input: MovieDataModel) -> MovieEntity
 

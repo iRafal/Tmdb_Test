@@ -1,7 +1,7 @@
 package com.tmdb.feature.home.ui.di.module
 
-import com.tmdb.feature.home.ui.data.mapping.HomeFeatureStateToUiSectionStateMapper
-import com.tmdb.feature.home.ui.data.mapping.HomeFeatureToUiStateMapper
+import com.tmdb.feature.home.ui.data.mapping.HomeDataStateToUiStateMapper
+import com.tmdb.feature.home.ui.data.mapping.HomeFeatureStateToUiStateMapper
 import com.tmdb.feature.home.ui.data.mapping.HomeMovieSectionToActionMapper
 import com.tmdb.feature.home.ui.data.mapping.MovieDataItemsToHomeModelMapper
 import com.tmdb.feature.home.ui.data.mapping.MovieDataToHomeModelMapper
@@ -9,7 +9,7 @@ import com.tmdb.feature.home.ui.data.mapping.homeFeatureToUiStateMapperImpl
 import com.tmdb.feature.home.ui.data.mapping.homeMovieSectionToActionMapperImpl
 import com.tmdb.feature.home.ui.data.mapping.movieDataItemsToHomeModelMapperImpl
 import com.tmdb.feature.home.ui.data.mapping.movieDataToHomeModelMapperImpl
-import com.tmdb.ui.core.data.mapping.mapFeatureToUiState
+import com.tmdb.ui.core.data.mapping.mapDataStateToUiState
 import dagger.Module
 import dagger.Provides
 
@@ -18,15 +18,15 @@ import dagger.Provides
 object HomeUiDataMappingModule {
     @Provides
     fun homeFeatureToUiStateMapper(
-        homeFeatureStateToUiSectionStateMapper: @JvmSuppressWildcards HomeFeatureStateToUiSectionStateMapper
-    ): @JvmSuppressWildcards HomeFeatureToUiStateMapper =
-        homeFeatureToUiStateMapperImpl(homeFeatureStateToUiSectionStateMapper)
+        homeDataStateToUiStateMapper: @JvmSuppressWildcards HomeDataStateToUiStateMapper
+    ): @JvmSuppressWildcards HomeFeatureStateToUiStateMapper =
+        homeFeatureToUiStateMapperImpl(homeDataStateToUiStateMapper)
 
     @Provides
     fun homeFeatureStateToUiSectionStateMapper(
         movieDataItemsToHomeModelMapper: @JvmSuppressWildcards MovieDataItemsToHomeModelMapper
-    ): @JvmSuppressWildcards HomeFeatureStateToUiSectionStateMapper =
-        mapFeatureToUiState(movieDataItemsToHomeModelMapper)
+    ): @JvmSuppressWildcards HomeDataStateToUiStateMapper =
+        mapDataStateToUiState(movieDataItemsToHomeModelMapper)
 
     @Provides
     fun movieDataItemsToHomeModelMapper(

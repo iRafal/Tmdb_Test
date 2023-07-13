@@ -11,7 +11,7 @@ typealias AppReducer = Reducer<AppState, AppEnv>
 
 fun createAppReducer(
     homeFeatureSlice: HomeFeatureSlice,
-    movieDetailsFeatureSlice: MovieDetailsFeatureSlice
+    movieDetailsFeatureSlice: @JvmSuppressWildcards MovieDetailsFeatureSlice
 ): AppReducer {
     return { state, action ->
         val (homeState, homeEffect) = homeFeatureSlice.reducer(state, action)
