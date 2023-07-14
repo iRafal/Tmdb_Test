@@ -1,9 +1,9 @@
-package com.tmdb.ui.runner
+package com.tmdb.runner
 
 import android.app.Application
 import android.content.Context
 import androidx.test.runner.AndroidJUnitRunner
-import com.tmdb.ui.DaggerTestApplication
+import com.tmdb.DaggerTestApplication
 
 class DaggerTestRunner : AndroidJUnitRunner() {
 

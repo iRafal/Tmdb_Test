@@ -1,7 +1,7 @@
-package com.tmdb.ui
+package com.tmdb
 
 import android.app.Application
-import com.tmdb.ui.di.TestAppComponentStore
+import com.tmdb.di.TestAppComponentStore
 
 open class DaggerTestApplication: Application() {
     override fun onCreate() {

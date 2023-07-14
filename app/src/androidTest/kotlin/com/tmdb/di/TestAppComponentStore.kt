@@ -1,7 +1,6 @@
-package com.tmdb.ui.di
+package com.tmdb.di
 
 import com.tmdb.di.component.store.AppStoreComponentStore
-import com.tmdb.di.component.DaggerTestAppComponent
 
 
 object TestAppComponentStore {

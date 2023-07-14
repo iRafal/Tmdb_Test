@@ -102,6 +102,8 @@ dependencies {
 
     kaptDependencies()
 
+    kaptAndroidTest(libs.dagger.compiler)
+
     // debugImplementationDependencies() //INFO: not used
 }
 
@@ -145,8 +147,6 @@ fun DependencyHandlerScope.androidTestImplementationDependencies() {
     androidTestImplementation(libs.espresso)
 
     androidTestImplementation(libs.kotlin.coroutines.test)
-
-    androidTestImplementation(libs.dagger.compiler)
 
     androidTestImplementation(libs.compose.ui.test.manifest.debug)
     androidTestImplementation(libs.compose.ui.test.junit)

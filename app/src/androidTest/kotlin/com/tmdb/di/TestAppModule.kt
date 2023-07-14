@@ -1,4 +1,4 @@
-package com.tmdb.ui.di
+package com.tmdb.di
 
 import android.app.Instrumentation
 import android.content.Context
