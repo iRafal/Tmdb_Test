@@ -9,11 +9,11 @@ import javax.inject.Inject
 
 class PersonRemoteDataSourceImpl @Inject constructor(
     private val api: PersonApi,
-    private val personApiModelToDataStateModelMapper: @JvmSuppressWildcards PersonApiModelToDataStateModelMapper
+    private val personApiModelToDataStateModelMapper: PersonApiModelToDataStateModelMapper
 ) : PersonRemoteDataSource {
     override suspend fun personDetails(
         personId: Int,
         language: String?,
         appendToResponse: String?
-    ): DataState<PersonDataModel> = personApiModelToDataStateModelMapper(api.personDetails(personId, language, appendToResponse))
+    ): DataState<PersonDataModel> = personApiModelToDataStateModelMapper.map(api.personDetails(personId, language, appendToResponse))
 }

@@ -8,17 +8,13 @@ import com.tmdb.data.api.implKtor.person.PersonApi
 import com.tmdb.utill.di.qualifiers.ApplicationScope
 
 
-interface ApiInjections {
-    @get:ApplicationScope
+interface HasApiServices {
     val discoverApi: DiscoverApi
 
-    @get:ApplicationScope
     val genreApi: GenreApi
 
-    @get:ApplicationScope
     val movieApi: MovieApi
 
-    @get:ApplicationScope
     val personApi: PersonApi
 
     val imageUrlProvider: ImageUrlProvider

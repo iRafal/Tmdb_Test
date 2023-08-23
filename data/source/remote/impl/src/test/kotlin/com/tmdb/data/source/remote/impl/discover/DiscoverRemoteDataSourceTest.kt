@@ -50,7 +50,7 @@ class DiscoverRemoteDataSourceTest {
         )
         val expectedDataState = DataState.Success(listOf(ModelUtil.movieDataModel))
 
-        whenever(moviesListApiModelToDataStateModelMapper.invoke(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(moviesListApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(discoverApi.discoverMovie()).thenReturn(expectedApiResponse)
 
         discoverSource.discoverMovie().run {
@@ -59,7 +59,7 @@ class DiscoverRemoteDataSourceTest {
         }
 
         verify(discoverApi, times(1)).discoverMovie()
-        verify(moviesListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
+        verify(moviesListApiModelToDataStateModelMapper, times(1)).map(expectedApiResponse)
     }
 
     @Test
@@ -68,7 +68,7 @@ class DiscoverRemoteDataSourceTest {
         val expectedDataState: DataState<List<MovieDataModel>> = DataState.NetworkError(expectedException)
         val expectedApiResponse = expectedNetworkErrorApiResponse
 
-        whenever(moviesListApiModelToDataStateModelMapper.invoke(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(moviesListApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(discoverApi.discoverMovie()).thenReturn(expectedApiResponse)
 
         discoverSource.discoverMovie().run {
@@ -76,7 +76,7 @@ class DiscoverRemoteDataSourceTest {
             assertSame(expectedDataState, this)
         }
         verify(discoverApi, times(1)).discoverMovie()
-        verify(moviesListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
+        verify(moviesListApiModelToDataStateModelMapper, times(1)).map(expectedApiResponse)
     }
 
     @Test
@@ -85,7 +85,7 @@ class DiscoverRemoteDataSourceTest {
         val expectedDataState: DataState<List<MovieDataModel>> = DataState.Error(expectedException)
         val expectedApiResponse: ApiResponse<DataPage<Movie>, NetworkErrorModel> = expectedApiErrorResponse
 
-        whenever(moviesListApiModelToDataStateModelMapper(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(moviesListApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(discoverApi.discoverMovie()).thenReturn(expectedApiResponse)
 
         discoverSource.discoverMovie().run {
@@ -94,7 +94,7 @@ class DiscoverRemoteDataSourceTest {
         }
 
         verify(discoverApi, times(1)).discoverMovie()
-        verify(moviesListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
+        verify(moviesListApiModelToDataStateModelMapper, times(1)).map(expectedApiResponse)
     }
 
     @Test
@@ -103,7 +103,7 @@ class DiscoverRemoteDataSourceTest {
         val expectedDataState: DataState<List<MovieDataModel>> = DataState.Error(expectedException)
         val expectedApiResponse: ApiResponse<DataPage<Movie>, NetworkErrorModel> = expectedUnknownErrorResponse
 
-        whenever(moviesListApiModelToDataStateModelMapper(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(moviesListApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(discoverApi.discoverMovie()).thenReturn(expectedApiResponse)
 
         discoverSource.discoverMovie().run {
@@ -112,7 +112,7 @@ class DiscoverRemoteDataSourceTest {
         }
 
         verify(discoverApi, times(1)).discoverMovie()
-        verify(moviesListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
+        verify(moviesListApiModelToDataStateModelMapper, times(1)).map(expectedApiResponse)
     }
 
     @Test
@@ -128,7 +128,7 @@ class DiscoverRemoteDataSourceTest {
         val expectedDataState = DataState.Success(listOf(ModelUtil.movieDataModel))
 
         whenever(discoverApi.discoverTv()).thenReturn(expectedApiResponse)
-        whenever(moviesListApiModelToDataStateModelMapper.invoke(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(moviesListApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
 
         discoverSource.discoverTv().run {
             assertTrue(this.isSuccess)
@@ -136,7 +136,7 @@ class DiscoverRemoteDataSourceTest {
         }
 
         verify(discoverApi, times(1)).discoverTv()
-        verify(moviesListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
+        verify(moviesListApiModelToDataStateModelMapper, times(1)).map(expectedApiResponse)
     }
 
     @Test
@@ -145,7 +145,7 @@ class DiscoverRemoteDataSourceTest {
         val expectedDataState: DataState<List<MovieDataModel>> = DataState.NetworkError(expectedException)
         val expectedApiResponse = expectedNetworkErrorApiResponse
 
-        whenever(moviesListApiModelToDataStateModelMapper.invoke(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(moviesListApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(discoverApi.discoverTv()).thenReturn(expectedApiResponse)
 
         discoverSource.discoverTv().run {
@@ -154,7 +154,7 @@ class DiscoverRemoteDataSourceTest {
         }
 
         verify(discoverApi, times(1)).discoverTv()
-        verify(moviesListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
+        verify(moviesListApiModelToDataStateModelMapper, times(1)).map(expectedApiResponse)
     }
 
     @Test
@@ -163,7 +163,7 @@ class DiscoverRemoteDataSourceTest {
         val expectedDataState: DataState<List<MovieDataModel>> = DataState.Error(expectedException)
         val expectedApiResponse: ApiResponse<DataPage<Movie>, NetworkErrorModel> = expectedApiErrorResponse
 
-        whenever(moviesListApiModelToDataStateModelMapper(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(moviesListApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(discoverApi.discoverTv()).thenReturn(expectedApiResponse)
 
         discoverSource.discoverTv().run {
@@ -172,7 +172,7 @@ class DiscoverRemoteDataSourceTest {
         }
 
         verify(discoverApi, times(1)).discoverTv()
-        verify(moviesListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
+        verify(moviesListApiModelToDataStateModelMapper, times(1)).map(expectedApiResponse)
     }
 
     @Test
@@ -181,7 +181,7 @@ class DiscoverRemoteDataSourceTest {
         val expectedDataState: DataState<List<MovieDataModel>> = DataState.Error(expectedException)
         val expectedApiResponse: ApiResponse<DataPage<Movie>, NetworkErrorModel> = expectedUnknownErrorResponse
 
-        whenever(moviesListApiModelToDataStateModelMapper(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(moviesListApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(discoverApi.discoverTv()).thenReturn(expectedApiResponse)
 
         discoverSource.discoverTv().run {
@@ -190,6 +190,6 @@ class DiscoverRemoteDataSourceTest {
         }
 
         verify(discoverApi, times(1)).discoverTv()
-        verify(moviesListApiModelToDataStateModelMapper, times(1)).invoke(expectedApiResponse)
+        verify(moviesListApiModelToDataStateModelMapper, times(1)).map(expectedApiResponse)
     }
 }

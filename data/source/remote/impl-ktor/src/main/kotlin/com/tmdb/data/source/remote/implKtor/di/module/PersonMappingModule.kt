@@ -1,30 +1,29 @@
 package com.tmdb.data.source.remote.implKtor.di.module
 
 import com.tmdb.data.source.remote.implKtor.mapping.PersonApiModelToDataModelMapper
+import com.tmdb.data.source.remote.implKtor.mapping.PersonApiModelToDataModelMapperImpl
 import com.tmdb.data.source.remote.implKtor.mapping.PersonApiModelToDataStateModelMapper
+import com.tmdb.data.source.remote.implKtor.mapping.PersonApiModelToDataStateModelMapperImpl
 import com.tmdb.data.source.remote.implKtor.mapping.PersonListApiModelToDataStateModelMapper
-import com.tmdb.data.source.remote.implKtor.mapping.apiModelListToDataStateMapperImpl
-import com.tmdb.data.source.remote.implKtor.mapping.apiModelToDataStateMapperImpl
-import com.tmdb.data.source.remote.implKtor.mapping.personApiModelToDataModelMapperImpl
+import com.tmdb.data.source.remote.implKtor.mapping.PersonListApiModelToDataStateModelMapperImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 
 @Module
-object PersonMappingModule {
-    @Provides
+interface PersonMappingModule {
+    @Binds
     fun personApiModelToDataModelMapper(
-    ): @JvmSuppressWildcards PersonApiModelToDataModelMapper = personApiModelToDataModelMapperImpl()
+        impl: PersonApiModelToDataModelMapperImpl
+    ): PersonApiModelToDataModelMapper
 
-    @Provides
+    @Binds
     fun personApiModelToDataStateModelMapper(
-        personApiModelToDataModelMapper: @JvmSuppressWildcards PersonApiModelToDataModelMapper
-    ): @JvmSuppressWildcards PersonApiModelToDataStateModelMapper = apiModelToDataStateMapperImpl(personApiModelToDataModelMapper)
+        impl: PersonApiModelToDataStateModelMapperImpl
+    ): PersonApiModelToDataStateModelMapper
 
-    @Provides
+    @Binds
     fun personListApiModelToDataStateModelMapper(
-        personApiModelToDataModelMapper: @JvmSuppressWildcards PersonApiModelToDataModelMapper
-    ): @JvmSuppressWildcards PersonListApiModelToDataStateModelMapper {
-        return apiModelListToDataStateMapperImpl(personApiModelToDataModelMapper)
-    }
+        impl: PersonListApiModelToDataStateModelMapperImpl
+    ): PersonListApiModelToDataStateModelMapper
 }

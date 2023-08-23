@@ -1,8 +1,8 @@
-package com.tmdb.data.local.impl.objectBox.di.component
+package com.tmdb.data.source.local.impl.di.component
 
 import com.tmdb.data.source.remote.contract.MovieLocalDataSource
 
 
-interface LocalDataSourceInjections {
+interface HasLocalDataSources {
     val movieLocalDataSource: MovieLocalDataSource
 }

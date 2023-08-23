@@ -18,13 +18,13 @@ import org.junit.Test
 class MovieApiModelMappingTest {
     private val baseUrl = "https://web.page.com"
     private val imageUrlProvider: ImageUrlProvider = ImageUrlProviderImpl(baseUrl)
-    private val movieApiModelToDataModelMapper: MovieApiModelToDataModelMapper = movieApiToDataModelMapperImpl(imageUrlProvider)
-    private val moviesListApiModelToDataStateModelMapper: MoviesListApiModelToDataStateModelMapper = apiModelListToDataStateMapperImpl(movieApiModelToDataModelMapper)
+    private val movieApiModelToDataModelMapper: MovieApiModelToDataModelMapper = MovieApiModelToDataModelMapperImpl(imageUrlProvider)
+    private val moviesListApiModelToDataStateModelMapper: MoviesListApiModelToDataStateModelMapper = MoviesListApiModelToDataStateModelMapperImpl(movieApiModelToDataModelMapper)
 
     @Test
     fun testMovieApiModelToDataModelMapper() {
         val input = ModelUtil.movieModel
-        val actual = movieApiModelToDataModelMapper.invoke(input)
+        val actual = movieApiModelToDataModelMapper.map(input)
         val expected = ModelUtil.movieDataModel
         assertEquals(expected, actual)
     }
@@ -34,7 +34,7 @@ class MovieApiModelMappingTest {
         val input: ApiResponse<DataPage<Movie>, NetworkErrorModel> =
             ApiResponse.Success(DataPage(page = 0, results = listOf(ModelUtil.movieModel)))
 
-        val actual = moviesListApiModelToDataStateModelMapper.invoke(input)
+        val actual = moviesListApiModelToDataStateModelMapper.map(input)
         val expected = DataState.Success(listOf(ModelUtil.movieDataModel))
         assertEquals(expected, actual)
     }
@@ -46,7 +46,7 @@ class MovieApiModelMappingTest {
         val expectedException = ApiException.InternalServerError()
 
         val input: ApiResponse<DataPage<Movie>, NetworkErrorModel> = ApiResponse.ApiError(expectedErrorBody, expectedErrorCode, expectedException)
-        val actual = moviesListApiModelToDataStateModelMapper.invoke(input)
+        val actual = moviesListApiModelToDataStateModelMapper.map(input)
 
         assertTrue(actual.isError)
     }
@@ -55,7 +55,7 @@ class MovieApiModelMappingTest {
     fun `mapping Success ApiResponse_NetworkError to DataState_NetworkError`() {
         val causeException = ApiException.NetworkError()
         val input: ApiResponse<DataPage<Movie>, NetworkErrorModel> = ApiResponse.NetworkError(causeException)
-        val actual = moviesListApiModelToDataStateModelMapper.invoke(input)
+        val actual = moviesListApiModelToDataStateModelMapper.map(input)
         val expected = DataState.NetworkError<List<MovieDataModel>>(causeException)
         assertEquals(expected, actual)
     }
@@ -63,7 +63,7 @@ class MovieApiModelMappingTest {
     @Test
     fun `mapping Success ApiResponse_UnknownError to DataState_Error`() {
         val input: ApiResponse<DataPage<Movie>, NetworkErrorModel> = ApiResponse.UnknownError()
-        val actual = moviesListApiModelToDataStateModelMapper.invoke(input)
+        val actual = moviesListApiModelToDataStateModelMapper.map(input)
         val expected = DataState.Error<List<MovieDataModel>>(null)
         assertEquals(expected, actual)
     }

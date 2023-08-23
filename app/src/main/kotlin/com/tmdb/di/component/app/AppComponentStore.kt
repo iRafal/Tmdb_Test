@@ -5,22 +5,24 @@ import com.tmdb.store.AppStore
 import com.tmdb.di.component.store.AppStoreComponentStore
 import com.tmdb.utill.di.qualifiers.ApplicationContext
 
-object AppComponentStore {
+internal class AppComponentStore {
     private var _appComponent: AppComponent? = null
     val component: AppComponent
         get() = checkNotNull(_appComponent)
 
+    val appStoreComponentStore: AppStoreComponentStore by lazy { AppStoreComponentStore() }
+
     fun init(@ApplicationContext context: Context) {
         if (_appComponent != null) return
 
-        AppStoreComponentStore.init(context)
+        appStoreComponentStore.init(context)
 
         val dependencies = object : AppComponentDependencies {
             override val applicationContext: Context
                 get() = context
 
             override val appStore: AppStore
-                get() = AppStoreComponentStore.component.appStore
+                get() = appStoreComponentStore.component.appStore
         }
 
         _appComponent = DaggerAppComponent.builder()
@@ -30,6 +32,6 @@ object AppComponentStore {
 
     fun clean() {
         _appComponent = null
-        AppStoreComponentStore.clean()
+        appStoreComponentStore.clean()
     }
 }

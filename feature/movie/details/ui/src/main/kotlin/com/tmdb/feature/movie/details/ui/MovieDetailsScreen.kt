@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.tmdb.feature.movie.details.ui.MovieDetailsUiEvent.NavigateBack
 import com.tmdb.feature.movie.details.ui.MovieDetailsUiState.Loading
-import com.tmdb.feature.movie.details.ui.di.movieDetailsFeatureComponent
+import com.tmdb.feature.movie.details.ui.di.MovieDetailsFeatureDi
 import com.tmdb.ui.core.compose.daggerViewModel
 import com.tmdb.ui.core.navigation.model.NavigationRoute
 
@@ -16,7 +16,7 @@ fun MovieDetailsScreen(
     movieId: Int,
 ) {
     val context = LocalContext.current
-    val component = remember { context.movieDetailsFeatureComponent }
+    val component = remember { MovieDetailsFeatureDi.fromContext(context) }
     val movieDetailsViewModel: MovieDetailsViewModel = daggerViewModel { component.movieDetailsViewModel }
     val state = Loading
 //        val state by movieDetailsViewModel.state.collectAsState(MovieDetailsState.Idle)

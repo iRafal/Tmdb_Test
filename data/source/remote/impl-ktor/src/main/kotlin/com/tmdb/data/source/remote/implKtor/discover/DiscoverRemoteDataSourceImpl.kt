@@ -9,18 +9,18 @@ import javax.inject.Inject
 
 class DiscoverRemoteDataSourceImpl @Inject constructor(
     private val api: DiscoverApi,
-    private val moviesListApiModelToDataStateModelMapper: @JvmSuppressWildcards MoviesListApiModelToDataStateModelMapper,
+    private val moviesListApiModelToDataStateModelMapper: MoviesListApiModelToDataStateModelMapper,
 ) : DiscoverRemoteDataSource {
 
     override suspend fun discoverTv(
         language: String?,
         page: Int?,
         region: String?
-    ): DataState<List<MovieDataModel>> = moviesListApiModelToDataStateModelMapper(api.discoverTv(language, page, region))
+    ): DataState<List<MovieDataModel>> = moviesListApiModelToDataStateModelMapper.map(api.discoverTv(language, page, region))
 
     override suspend fun discoverMovie(
         language: String?,
         page: Int?,
         region: String?
-    ): DataState<List<MovieDataModel>> = moviesListApiModelToDataStateModelMapper(api.discoverMovie(language, page, region))
+    ): DataState<List<MovieDataModel>> = moviesListApiModelToDataStateModelMapper.map(api.discoverMovie(language, page, region))
 }

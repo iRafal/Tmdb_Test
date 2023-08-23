@@ -1,20 +1,18 @@
 package com.tmdb.data.local.impl.objectBox.di.module
 
 import com.tmdb.data.local.impl.objectBox.mapping.MovieDataModelToEntityMapper
+import com.tmdb.data.local.impl.objectBox.mapping.MovieDataModelToEntityMapperImpl
 import com.tmdb.data.local.impl.objectBox.mapping.MovieEntityToDataModelMapper
-import com.tmdb.data.local.impl.objectBox.mapping.movieDataModelToEntityMapperImpl
-import com.tmdb.data.local.impl.objectBox.mapping.movieEntityToDataModelMapperImpl
+import com.tmdb.data.local.impl.objectBox.mapping.MovieEntityToDataModelMapperImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 
 @Module
-object LocalDataSourceDataMappingModule {
-    @Provides
-    fun movieEntityToDataModelMapper(): @JvmSuppressWildcards MovieEntityToDataModelMapper =
-        ::movieEntityToDataModelMapperImpl
+interface LocalDataSourceDataMappingModule {
+    @Binds
+    fun movieEntityToDataModelMapper(impl: MovieEntityToDataModelMapperImpl): MovieEntityToDataModelMapper
 
-    @Provides
-    fun movieDataModelToEntityMapper(): @JvmSuppressWildcards MovieDataModelToEntityMapper =
-        ::movieDataModelToEntityMapperImpl
+    @Binds
+    fun movieDataModelToEntityMapper(impl: MovieDataModelToEntityMapperImpl): MovieDataModelToEntityMapper
 }

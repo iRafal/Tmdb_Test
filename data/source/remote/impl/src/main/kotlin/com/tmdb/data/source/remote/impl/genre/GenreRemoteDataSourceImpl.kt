@@ -9,16 +9,16 @@ import javax.inject.Inject
 
 class GenreRemoteDataSourceImpl @Inject constructor(
     private val api: GenreApi,
-    private val genreListApiModelToDataStateModelMapper: @JvmSuppressWildcards GenreListApiModelToDataStateModelMapper,
+    private val genreListApiModelToDataStateModelMapper: GenreListApiModelToDataStateModelMapper,
 ) : GenreRemoteDataSource {
 
     override suspend fun genreMovieList(language: String?): DataState<List<GenreDataModel>> {
         val response = api.genreMovieList(language)
-        return genreListApiModelToDataStateModelMapper(response)
+        return genreListApiModelToDataStateModelMapper.map(response)
     }
 
     override suspend fun genreTvList(language: String?): DataState<List<GenreDataModel>> {
         val response = api.genreTvList(language)
-        return genreListApiModelToDataStateModelMapper(response)
+        return genreListApiModelToDataStateModelMapper.map(response)
     }
 }

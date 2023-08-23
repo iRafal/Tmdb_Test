@@ -10,41 +10,41 @@ import javax.inject.Inject
 
 class MovieRemoteDataSourceImpl @Inject constructor(
     private val api: MovieApi,
-    private val movieApiModelToDataStateModelMapper: @JvmSuppressWildcards MovieApiModelToDataStateModelMapper,
-    private val moviesListApiModelToDataStateModelMapper: @JvmSuppressWildcards MoviesListApiModelToDataStateModelMapper,
+    private val movieApiModelToDataStateModelMapper: MovieApiModelToDataStateModelMapper,
+    private val moviesListApiModelToDataStateModelMapper: MoviesListApiModelToDataStateModelMapper,
 ) : MovieRemoteDataSource {
     override suspend fun movie(
         movieId: Int,
         language: String?,
         appendToResponse: String?
-    ): DataState<MovieDataModel> = movieApiModelToDataStateModelMapper(api.movie(movieId, language, appendToResponse))
+    ): DataState<MovieDataModel> = movieApiModelToDataStateModelMapper.map(api.movie(movieId, language, appendToResponse))
 
     override suspend fun latestMovie(
         language: String?
-    ): DataState<MovieDataModel> = movieApiModelToDataStateModelMapper(api.latestMovie(language))
+    ): DataState<MovieDataModel> = movieApiModelToDataStateModelMapper.map(api.latestMovie(language))
 
     override suspend fun nowPlayingMovies(
         language: String?,
         page: Int?,
         region: String?
-    ): DataState<List<MovieDataModel>> = moviesListApiModelToDataStateModelMapper(api.nowPlayingMovies(language, page, region))
+    ): DataState<List<MovieDataModel>> = moviesListApiModelToDataStateModelMapper.map(api.nowPlayingMovies(language, page, region))
 
     override suspend fun nowPopularMovies(
         language: String?,
         page: Int?,
         region: String?
     ): DataState<List<MovieDataModel>> =
-        moviesListApiModelToDataStateModelMapper(api.nowPopularMovies(language, page, region))
+        moviesListApiModelToDataStateModelMapper.map(api.nowPopularMovies(language, page, region))
 
     override suspend fun topRatedMovies(
         language: String?,
         page: Int?,
         region: String?
-    ): DataState<List<MovieDataModel>> = moviesListApiModelToDataStateModelMapper(api.topRatedMovies(language, page, region))
+    ): DataState<List<MovieDataModel>> = moviesListApiModelToDataStateModelMapper.map(api.topRatedMovies(language, page, region))
 
     override suspend fun upcomingMovies(
         language: String?,
         page: Int?,
         region: String?
-    ): DataState<List<MovieDataModel>> = moviesListApiModelToDataStateModelMapper(api.upcomingMovies(language, page, region))
+    ): DataState<List<MovieDataModel>> = moviesListApiModelToDataStateModelMapper.map(api.upcomingMovies(language, page, region))
 }

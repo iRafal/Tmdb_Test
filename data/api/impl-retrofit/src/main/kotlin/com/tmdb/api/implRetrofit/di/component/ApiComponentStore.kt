@@ -1,6 +1,6 @@
 package com.tmdb.api.implRetrofit.di.component
 
-object ApiComponentStore {
+class ApiComponentStore {
     private var _component: ApiComponent? = null
     val component: ApiComponent
         get() {

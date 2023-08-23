@@ -3,7 +3,7 @@ package com.tmdb.data.source.local.impl.di.component
 import android.content.Context
 import com.tmdb.utill.di.qualifiers.ApplicationContext
 
-object LocalDataSourceComponentStore {
+class LocalDataSourceComponentStore {
     private var _component: LocalDataSourceComponent? = null
     val component: LocalDataSourceComponent
         get() = checkNotNull(_component)

@@ -1,6 +1,6 @@
 package com.tmdb.data.api.implKtor.di.component
 
-object ApiComponentStore {
+class ApiComponentStore {
     private var _component: ApiComponent? = null
     val component: ApiComponent
         get() {

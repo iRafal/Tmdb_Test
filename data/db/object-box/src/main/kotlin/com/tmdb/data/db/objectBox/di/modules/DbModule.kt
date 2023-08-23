@@ -13,14 +13,14 @@ import io.objectbox.Box
 import io.objectbox.BoxStore
 
 @Module
-object DbModule {
+class DbModule {
 
-    @[Provides ApplicationScope]
-    fun dataBase(@ApplicationContext appContext:  Context): BoxStore = ObjectBoxConfig.store(appContext)
+    @Provides
+    fun dataBase(@ApplicationContext appContext: Context): BoxStore = ObjectBoxConfig.store(appContext)
 
-    @[Provides ApplicationScope]
+    @Provides
     fun movieBox(boxStore: BoxStore): Box<MovieEntity> = ObjectBoxConfig.moviesBox(boxStore)
 
-    @[Provides ApplicationScope]
+    @Provides
     fun movieDao(impl: MovieDaoImpl): MovieDao = impl
 }

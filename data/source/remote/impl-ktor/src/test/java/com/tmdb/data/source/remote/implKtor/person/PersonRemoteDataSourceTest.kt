@@ -44,7 +44,7 @@ class PersonRemoteDataSourceTest {
         val expectedApiResponse = ApiResponse.Success(ModelUtil.personModel)
         val expectedDataState = DataState.Success(ModelUtil.personDataModel)
 
-        whenever(personApiModelToDataStateModelMapper.invoke(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(personApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(personApi.personDetails(expectedPersonId)).thenReturn(expectedApiResponse)
 
         personSource.personDetails(expectedPersonId).run {
@@ -53,7 +53,7 @@ class PersonRemoteDataSourceTest {
         }
 
         verify(personApi, times(1)).personDetails(expectedPersonId)
-        verify(personApiModelToDataStateModelMapper, Mockito.times(1)).invoke(expectedApiResponse)
+        verify(personApiModelToDataStateModelMapper, Mockito.times(1)).map(expectedApiResponse)
     }
 
     @Test
@@ -62,7 +62,7 @@ class PersonRemoteDataSourceTest {
         val expectedDataState: DataState<PersonDataModel> = DataState.NetworkError(expectedException)
         val expectedApiResponse = expectedNetworkErrorApiResponse
 
-        whenever(personApiModelToDataStateModelMapper.invoke(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(personApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(personApi.personDetails(expectedPersonId)).thenReturn(expectedApiResponse)
 
         personSource.personDetails(expectedPersonId).run {
@@ -71,7 +71,7 @@ class PersonRemoteDataSourceTest {
         }
 
         verify(personApi, times(1)).personDetails(expectedPersonId)
-        verify(personApiModelToDataStateModelMapper, Mockito.times(1)).invoke(expectedApiResponse)
+        verify(personApiModelToDataStateModelMapper, Mockito.times(1)).map(expectedApiResponse)
     }
 
     @Test
@@ -80,7 +80,7 @@ class PersonRemoteDataSourceTest {
         val expectedDataState: DataState<PersonDataModel> = DataState.Error(expectedException)
         val expectedApiResponse: ApiResponse<Person, NetworkErrorModel> = expectedApiErrorResponse
 
-        whenever(personApiModelToDataStateModelMapper.invoke(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(personApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(personApi.personDetails(expectedPersonId)).thenReturn(expectedApiResponse)
 
         personSource.personDetails(expectedPersonId).run {
@@ -89,7 +89,7 @@ class PersonRemoteDataSourceTest {
         }
 
         verify(personApi, times(1)).personDetails(expectedPersonId)
-        verify(personApiModelToDataStateModelMapper, Mockito.times(1)).invoke(expectedApiResponse)
+        verify(personApiModelToDataStateModelMapper, Mockito.times(1)).map(expectedApiResponse)
     }
 
     @Test
@@ -98,7 +98,7 @@ class PersonRemoteDataSourceTest {
         val expectedDataState: DataState<PersonDataModel> = DataState.Error(expectedException)
         val expectedApiResponse: ApiResponse<Person, NetworkErrorModel> = expectedUnknownErrorResponse
 
-        whenever(personApiModelToDataStateModelMapper.invoke(expectedApiResponse)).thenReturn(expectedDataState)
+        whenever(personApiModelToDataStateModelMapper.map(expectedApiResponse)).thenReturn(expectedDataState)
         whenever(personApi.personDetails(expectedPersonId)).thenReturn(expectedApiResponse)
 
         personSource.personDetails(expectedPersonId).run {
@@ -107,6 +107,6 @@ class PersonRemoteDataSourceTest {
         }
 
         verify(personApi, times(1)).personDetails(expectedPersonId)
-        verify(personApiModelToDataStateModelMapper, Mockito.times(1)).invoke(expectedApiResponse)
+        verify(personApiModelToDataStateModelMapper, Mockito.times(1)).map(expectedApiResponse)
     }
 }

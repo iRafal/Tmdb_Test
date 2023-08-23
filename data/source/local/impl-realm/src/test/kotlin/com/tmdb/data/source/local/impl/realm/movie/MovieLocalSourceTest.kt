@@ -57,14 +57,14 @@ class MovieLocalSourceTest {
     fun `observe all movies success`() = runTest {
         val allMoviesEntities = listOf(movieEntity)
         val allMovieDataModels = listOf(movieDataModel)
-        `when`(movieEntityToDataModelMapper.invoke(movieEntity)).thenReturn(movieDataModel)
+        `when`(movieEntityToDataModelMapper.map(movieEntity)).thenReturn(movieDataModel)
         val flow = flow {
             emit(allMoviesEntities)
         }
         `when`(movieDao.observeAll()).thenReturn(flow)
         movieLocalSource.observeAll().collect { result ->
             verify(movieDao, times(1)).observeAll()
-            verify(movieEntityToDataModelMapper, times(1)).invoke(movieEntity)
+            verify(movieEntityToDataModelMapper, times(1)).map(movieEntity)
             assertEquals(allMovieDataModels, result)
         }
     }
@@ -78,7 +78,7 @@ class MovieLocalSourceTest {
         `when`(movieDao.observeAll()).thenReturn(flow)
         movieLocalSource.observeAll().catch { e ->
             verify(movieDao, times(1)).observeAll()
-            verify(movieEntityToDataModelMapper, times(0)).invoke(movieEntity)
+            verify(movieEntityToDataModelMapper, times(0)).map(movieEntity)
             assertEquals(e, exception)
         }.collect()
     }
@@ -88,12 +88,12 @@ class MovieLocalSourceTest {
         val allMovieEntities = listOf(movieEntity)
         val allMovieDataModels = listOf(movieDataModel)
         `when`(movieDao.getAll()).thenReturn(allMovieEntities)
-        `when`(movieEntityToDataModelMapper.invoke(movieEntity)).thenReturn(movieDataModel)
+        `when`(movieEntityToDataModelMapper.map(movieEntity)).thenReturn(movieDataModel)
         movieLocalSource.getAll().also { result ->
             assertEquals(allMovieDataModels, result)
         }
         verify(movieDao, times(1)).getAll()
-        verify(movieEntityToDataModelMapper, times(1)).invoke(movieEntity)
+        verify(movieEntityToDataModelMapper, times(1)).map(movieEntity)
     }
 
     @Test
@@ -103,7 +103,7 @@ class MovieLocalSourceTest {
             assertTrue(result.isEmpty())
         }
         verify(movieDao, times(1)).getAll()
-        verify(movieEntityToDataModelMapper, times(0)).invoke(movieEntity)
+        verify(movieEntityToDataModelMapper, times(0)).map(movieEntity)
     }
 
     @Test
@@ -115,7 +115,7 @@ class MovieLocalSourceTest {
             movieLocalSource.getAll()
         }.onFailure { e ->
             verify(movieDao, times(1)).getAll()
-            verify(movieEntityToDataModelMapper, times(0)).invoke(movieEntity)
+            verify(movieEntityToDataModelMapper, times(0)).map(movieEntity)
             assertEquals(e, exception)
         }
     }
@@ -123,12 +123,12 @@ class MovieLocalSourceTest {
     @Test
     fun `get movie by id success`() = runTest {
         `when`(movieDao.getById(movieId)).thenReturn(movieEntity)
-        `when`(movieEntityToDataModelMapper.invoke(movieEntity)).thenReturn(movieDataModel)
+        `when`(movieEntityToDataModelMapper.map(movieEntity)).thenReturn(movieDataModel)
         movieLocalSource.getById(movieId).also { result ->
             assertEquals(movieDataModel, result)
         }
         verify(movieDao, times(1)).getById(movieId)
-        verify(movieEntityToDataModelMapper, times(1)).invoke(movieEntity)
+        verify(movieEntityToDataModelMapper, times(1)).map(movieEntity)
     }
 
     @Test
@@ -138,7 +138,7 @@ class MovieLocalSourceTest {
             assertNull(result)
         }
         verify(movieDao, times(1)).getById(movieId)
-        verify(movieEntityToDataModelMapper, times(0)).invoke(movieEntity)
+        verify(movieEntityToDataModelMapper, times(0)).map(movieEntity)
     }
 
     @Test
@@ -150,7 +150,7 @@ class MovieLocalSourceTest {
             movieLocalSource.getById(movieId)
         }.onFailure { e ->
             verify(movieDao, times(1)).getById(movieId)
-            verify(movieEntityToDataModelMapper, times(0)).invoke(movieEntity)
+            verify(movieEntityToDataModelMapper, times(0)).map(movieEntity)
             assertEquals(e, exception)
         }
     }
@@ -158,9 +158,9 @@ class MovieLocalSourceTest {
     @Test
     fun `insert movies success`() = runTest {
         `when`(movieDao.insert(movieEntity)).thenReturn(Unit)
-        `when`(movieDataModelToEntityMapper.invoke(movieDataModel)).thenReturn(movieEntity)
+        `when`(movieDataModelToEntityMapper.map(movieDataModel)).thenReturn(movieEntity)
         movieLocalSource.insert(movieDataModel)
-        verify(movieDataModelToEntityMapper, times(1)).invoke(movieDataModel)
+        verify(movieDataModelToEntityMapper, times(1)).map(movieDataModel)
         verify(movieDao, times(1)).insert(movieEntity)
     }
 
@@ -173,17 +173,17 @@ class MovieLocalSourceTest {
             movieLocalSource.insert(movieDataModel)
         }.onFailure { e ->
             verify(movieDao, times(1)).insert(movieEntity)
-            verify(movieDataModelToEntityMapper, times(0)).invoke(movieDataModel)
+            verify(movieDataModelToEntityMapper, times(0)).map(movieDataModel)
             assertEquals(e, exception)
         }
     }
 
     @Test
     fun `delete movies success`() = runTest {
-        `when`(movieDataModelToEntityMapper.invoke(movieDataModel)).thenReturn(movieEntity)
+        `when`(movieDataModelToEntityMapper.map(movieDataModel)).thenReturn(movieEntity)
         movieLocalSource.delete(movieDataModel)
         verify(movieDao, times(1)).delete(movieEntity)
-        verify(movieDataModelToEntityMapper, times(1)).invoke(movieDataModel)
+        verify(movieDataModelToEntityMapper, times(1)).map(movieDataModel)
     }
 
     @Test
@@ -195,7 +195,7 @@ class MovieLocalSourceTest {
             movieLocalSource.delete(movieDataModel)
         }.onFailure { e ->
             verify(movieDao, times(1)).delete(movieEntity)
-            verify(movieDataModelToEntityMapper, times(0)).invoke(movieDataModel)
+            verify(movieDataModelToEntityMapper, times(0)).map(movieDataModel)
             assertEquals(e, exception)
         }
     }

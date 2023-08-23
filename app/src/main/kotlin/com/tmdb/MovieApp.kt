@@ -7,22 +7,13 @@ import coil.Coil
 import coil.ImageLoader
 import com.tmdb.di.component.app.AppComponent
 import com.tmdb.di.component.app.AppComponentStore
-import com.tmdb.di.component.store.AppStoreComponentStore
-import com.tmdb.feature.home.ui.di.DaggerHomeFeatureComponent
-import com.tmdb.feature.home.ui.di.HomeFeatureComponent
-import com.tmdb.feature.home.ui.di.HomeFeatureComponentDependencies
-import com.tmdb.feature.home.ui.di.HomeFeatureComponentProvider
-import com.tmdb.feature.movie.details.ui.di.DaggerMovieDetailsFeatureComponent
-import com.tmdb.feature.movie.details.ui.di.MovieDetailsFeatureComponent
-import com.tmdb.feature.movie.details.ui.di.MovieDetailsFeatureComponentDependencies
-import com.tmdb.feature.movie.details.ui.di.MovieDetailsFeatureComponentProvider
-import com.tmdb.store.AppStore
+import com.tmdb.di.component.store.AppStoreComponent
 import com.tmdb.util.logging.AndroidReleaseLogcatLogger
 import com.tmdb.utill.di.qualifiers.ApplicationScope
-import javax.inject.Inject
 import logcat.AndroidLogcatLogger
+import javax.inject.Inject
 
-class MovieApp : Application(), HomeFeatureComponentProvider, MovieDetailsFeatureComponentProvider/*, Configuration.Provider*/ {
+class MovieApp : Application() /*, Configuration.Provider*/ {
 
     //TODO
 //    @Inject
@@ -32,33 +23,19 @@ class MovieApp : Application(), HomeFeatureComponentProvider, MovieDetailsFeatur
     @ApplicationScope
     lateinit var coilImageLoader: ImageLoader
 
+    private val appComponentStore: AppComponentStore by lazy { AppComponentStore() }
+
     val appComponent: AppComponent
-        get() = AppComponentStore.component
+        get() = appComponentStore.component
 
-    override val homeFeatureComponent: HomeFeatureComponent
-        get() = DaggerHomeFeatureComponent.builder().dependencies(
-            object : HomeFeatureComponentDependencies {
-                override val appStore: AppStore
-                    get() = AppStoreComponentStore.component.appStore
-            }
-        ).build()
-
-    override val movieDetailsFeatureComponent: MovieDetailsFeatureComponent
-        get() = DaggerMovieDetailsFeatureComponent.builder().dependencies(
-            object : MovieDetailsFeatureComponentDependencies {
-                override val appStore: AppStore
-                    get() = AppStoreComponentStore.component.appStore
-            }
-        ).build()
+    val appStoreComponent: AppStoreComponent
+        get() = appComponentStore.appStoreComponentStore.component
 
     override fun onCreate() {
         super.onCreate()
         initLogging()
 //        initIoStrictPolicy()
-
-        AppComponentStore.init(this)
-        AppComponentStore.component.inject(this)
-
+        initComponents()
         initCoil()
     }
 
@@ -71,6 +48,11 @@ class MovieApp : Application(), HomeFeatureComponentProvider, MovieDetailsFeatur
                 onErrorLog = { priority, tag, message -> /* TODO pass logs to crash tracking tool */ }
             )
         }
+    }
+
+    private fun initComponents() {
+        appComponentStore.init(this)
+        appComponentStore.component.inject(this)
     }
 
     //TODO
@@ -103,11 +85,15 @@ class MovieApp : Application(), HomeFeatureComponentProvider, MovieDetailsFeatur
 
     override fun onTerminate() {
         super.onTerminate()
-        AppComponentStore.clean()
+        cleanComponents()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        AppComponentStore.clean()
+        cleanComponents()
+    }
+
+    private fun cleanComponents() {
+        appComponentStore.clean()
     }
 }

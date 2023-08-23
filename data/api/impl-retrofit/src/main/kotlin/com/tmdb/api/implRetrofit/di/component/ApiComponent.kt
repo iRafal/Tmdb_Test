@@ -7,7 +7,7 @@ import dagger.Component
 
 
 @[ApplicationScope Component(modules = [ApiModule::class, ApiConfigModule::class])]
-interface ApiComponent: ApiInjections {
+interface ApiComponent: HasApiServices {
 
     @Component.Builder
     interface Builder {

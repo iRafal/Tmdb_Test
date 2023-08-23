@@ -1,30 +1,29 @@
 package com.tmdb.data.source.remote.impl.di.module
 
-import com.tmdb.api.config.url.image.contract.ImageUrlProvider
-import com.tmdb.data.source.remote.impl.mapping.apiModelListToDataStateMapperImpl
-import com.tmdb.data.source.remote.impl.mapping.apiModelToDataStateMapperImpl
-import com.tmdb.data.source.remote.impl.mapping.MovieApiModelToDataModelMapper
-import com.tmdb.data.source.remote.impl.mapping.MovieApiModelToDataStateModelMapper
-import com.tmdb.data.source.remote.impl.mapping.MoviesListApiModelToDataStateModelMapper
-import com.tmdb.data.source.remote.impl.mapping.movieApiToDataModelMapperImpl
-import dagger.Module
-import dagger.Provides
 
+import com.tmdb.data.source.remote.impl.mapping.MovieApiModelToDataModelMapper
+import com.tmdb.data.source.remote.impl.mapping.MovieApiModelToDataModelMapperImpl
+import com.tmdb.data.source.remote.impl.mapping.MovieApiModelToDataStateModelMapper
+import com.tmdb.data.source.remote.impl.mapping.MovieApiModelToDataStateModelMapperImpl
+import com.tmdb.data.source.remote.impl.mapping.MoviesListApiModelToDataStateModelMapper
+import com.tmdb.data.source.remote.impl.mapping.MoviesListApiModelToDataStateModelMapperImpl
+import dagger.Binds
+import dagger.Module
 
 @Module
-object MovieMappingModule {
-    @Provides
+interface MovieMappingModule {
+    @Binds
     fun movieApiToDataModelMapper(
-        imageUrlProvider: ImageUrlProvider
-    ): @JvmSuppressWildcards MovieApiModelToDataModelMapper = movieApiToDataModelMapperImpl(imageUrlProvider)
+        impl: MovieApiModelToDataModelMapperImpl
+    ): MovieApiModelToDataModelMapper
 
-    @Provides
+    @Binds
     fun movieApiModelToDataStateModelMapper(
-        movieApiModelToDataModelMapper: @JvmSuppressWildcards MovieApiModelToDataModelMapper
-    ): @JvmSuppressWildcards MovieApiModelToDataStateModelMapper = apiModelToDataStateMapperImpl(movieApiModelToDataModelMapper)
+        impl: MovieApiModelToDataStateModelMapperImpl
+    ): MovieApiModelToDataStateModelMapper
 
-    @Provides
+    @Binds
     fun moviesApiToDataStateMapper(
-        movieApiModelToDataModelMapper: @JvmSuppressWildcards MovieApiModelToDataModelMapper
-    ): @JvmSuppressWildcards MoviesListApiModelToDataStateModelMapper = apiModelListToDataStateMapperImpl(movieApiModelToDataModelMapper)
+        impl: MoviesListApiModelToDataStateModelMapperImpl
+    ): MoviesListApiModelToDataStateModelMapper
 }

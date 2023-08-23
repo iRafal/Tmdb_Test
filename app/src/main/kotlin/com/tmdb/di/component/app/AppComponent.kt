@@ -5,6 +5,7 @@ import coil.ImageLoader
 import com.tmdb.MovieApp
 import com.tmdb.di.component.app.module.AppModule
 import com.tmdb.store.AppStore
+import com.tmdb.ui.core.di.base.HasAppContext
 import com.tmdb.ui.main.MainActivity
 import com.tmdb.utill.di.qualifiers.ApplicationContext
 import com.tmdb.utill.di.qualifiers.ApplicationScope
@@ -12,10 +13,7 @@ import dagger.Component
 
 @Component(modules = [AppModule::class], dependencies = [AppComponentDependencies::class])
 @ApplicationScope
-interface AppComponent {
-
-    @get:ApplicationContext
-    val applicationContext: Context
+interface AppComponent: HasAppContext {
 
     @get:ApplicationScope
     val imageLoader: ImageLoader

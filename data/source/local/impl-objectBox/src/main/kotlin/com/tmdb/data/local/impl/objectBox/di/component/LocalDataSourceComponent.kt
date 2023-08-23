@@ -9,7 +9,7 @@ import dagger.Component
 
 
 @[ApplicationScope Component(modules = [LocalDataSourceModule::class])]
-interface LocalDataSourceComponent: LocalDataSourceInjections {
+interface LocalDataSourceComponent: HasLocalDataSources {
     @Component.Builder
     interface Builder {
         @BindsInstance

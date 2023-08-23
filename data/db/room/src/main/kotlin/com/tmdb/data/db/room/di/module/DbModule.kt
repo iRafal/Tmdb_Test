@@ -4,7 +4,6 @@ import android.content.Context
 import com.tmdb.data.db.room.MovieDb
 import com.tmdb.data.db.room.movie.MovieDao
 import com.tmdb.utill.di.qualifiers.ApplicationContext
-import com.tmdb.utill.di.qualifiers.ApplicationScope
 import dagger.Module
 import dagger.Provides
 
@@ -12,9 +11,9 @@ import dagger.Provides
 @Module
 object DbModule {
 
-    @[Provides ApplicationScope]
+    @Provides
     fun dataBase(@ApplicationContext appContext: Context): MovieDb = MovieDb.getInstance(appContext)
 
-    @[Provides ApplicationScope]
+    @Provides
     fun movieDao(database: MovieDb): MovieDao = database.movieDao()
 }

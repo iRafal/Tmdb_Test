@@ -58,7 +58,7 @@ fun DependencyHandlerScope.kaptDependencies() {
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
-    implementation(project(":store:state"))
+    implementation(project(":store:app-store"))
     implementation(project(":data:model"))
     implementation(libs.dagger)
 }

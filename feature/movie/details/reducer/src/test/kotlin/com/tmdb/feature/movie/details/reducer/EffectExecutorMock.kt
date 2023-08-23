@@ -13,7 +13,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
 interface EffectExecutorMock : Effect.Executor<AppEnv> {
-    val effectExecutorScope: Effect.Executor.Scope<AppEnv>
+    val effectExecutorScope: Effect.Scope<AppEnv>
 }
 
 fun createMockEffectExecutor(
@@ -40,14 +40,14 @@ fun createMockEffectExecutor(
     }
 
     return object : EffectExecutorMock {
-        override val effectExecutorScope: Effect.Executor.Scope<AppEnv> =
-            mock<Effect.Executor.Scope<AppEnv>>().apply {
+        override val effectExecutorScope: Effect.Scope<AppEnv> =
+            mock<Effect.Scope<AppEnv>>().apply {
                 whenever(this.env).thenReturn(appEnv)
             }
 
         override fun execute(
             feature: Feature,
-            effectBlock: suspend Effect.Executor.Scope<AppEnv>.() -> Unit
+            effectBlock: suspend Effect.Scope<AppEnv>.() -> Unit
         ) {
             runBlocking {
                 effectBlock(effectExecutorScope)

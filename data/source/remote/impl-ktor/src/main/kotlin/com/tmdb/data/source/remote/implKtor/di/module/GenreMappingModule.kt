@@ -1,30 +1,29 @@
 package com.tmdb.data.source.remote.implKtor.di.module
 
 import com.tmdb.data.source.remote.implKtor.mapping.GenreApiModelToDataModelMapper
+import com.tmdb.data.source.remote.implKtor.mapping.GenreApiModelToDataModelMapperImpl
 import com.tmdb.data.source.remote.implKtor.mapping.GenreApiModelToDataStateModelMapper
+import com.tmdb.data.source.remote.implKtor.mapping.GenreApiModelToDataStateModelMapperImpl
 import com.tmdb.data.source.remote.implKtor.mapping.GenreListApiModelToDataStateModelMapper
-import com.tmdb.data.source.remote.implKtor.mapping.apiModelToDataStateMapperImpl
-import com.tmdb.data.source.remote.implKtor.mapping.genreApiModelToDataModelMapperImpl
-import com.tmdb.data.source.remote.implKtor.mapping.genreListToDataStateMapperImpl
+import com.tmdb.data.source.remote.implKtor.mapping.GenreListApiModelToDataStateModelMapperImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 
 @Module
-object GenreMappingModule {
-    @Provides
+interface GenreMappingModule {
+    @Binds
     fun genreApiModelToDataModelMapper(
-    ): @JvmSuppressWildcards GenreApiModelToDataModelMapper = genreApiModelToDataModelMapperImpl()
+        impl: GenreApiModelToDataModelMapperImpl
+    ): GenreApiModelToDataModelMapper
 
-    @Provides
+    @Binds
     fun genreApiModelToDataStateModelMapper(
-        genreApiModelToDataModelMapper: @JvmSuppressWildcards GenreApiModelToDataModelMapper
-    ): @JvmSuppressWildcards GenreApiModelToDataStateModelMapper = apiModelToDataStateMapperImpl(genreApiModelToDataModelMapper)
+        impl: GenreApiModelToDataStateModelMapperImpl
+    ): GenreApiModelToDataStateModelMapper
 
-    @Provides
+    @Binds
     fun genreListApiModelToDataStateModelMapper(
-        genreApiModelToDataModelMapper: @JvmSuppressWildcards GenreApiModelToDataModelMapper
-    ): @JvmSuppressWildcards GenreListApiModelToDataStateModelMapper {
-        return genreListToDataStateMapperImpl(genreApiModelToDataModelMapper)
-    }
+        impl: GenreListApiModelToDataStateModelMapperImpl
+    ): GenreListApiModelToDataStateModelMapper
 }
