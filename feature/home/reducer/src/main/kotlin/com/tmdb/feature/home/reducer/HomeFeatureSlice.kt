@@ -7,22 +7,19 @@ import com.tmdb.store.base.Effects
 import com.tmdb.store.base.feature.FeatureReducer
 import com.tmdb.store.base.feature.FeatureSlice
 import com.tmdb.store.env.contract.AppEnv
-import com.tmdb.store.state.app.AppState
-import com.tmdb.store.state.home.HomeFeatureState
+import com.tmdb.store.state.AppState
+import com.tmdb.store.state.HomeFeatureState
 
-interface HomeFeatureSlice : FeatureSlice<AppState, AppEnv, HomeFeatureState>
 
-class HomeFeatureSliceImpl(
+class HomeFeatureSlice(
     homeFeatureEffects: HomeFeatureEffects
-) : HomeFeatureSlice {
+) : FeatureSlice<AppState, AppEnv, HomeFeatureState> {
 
     override val reducer: FeatureReducer<AppState, AppEnv, HomeFeatureState> =
         { globalState: AppState,
-            action: Action ->
+          action: Action ->
             when (action) {
-                is HomeAction -> {
-                    globalState.reduce(action, homeFeatureEffects)
-                }
+                is HomeAction -> globalState.reduce(action, homeFeatureEffects)
                 else -> globalState.homeState to Effects.empty()
             }
         }

@@ -15,10 +15,9 @@ include(":ui-core")
 include(":store:base")
 include(":store:feature")
 include(":store:env")
-include(":store:reducer:app")
 include(":store:state")
 include(":store:action")
-include(":store:app")
+include(":store:app-store")
 
 include(":data:model")
 

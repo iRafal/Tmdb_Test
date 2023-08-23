@@ -5,12 +5,11 @@ import com.tmdb.data.model.MovieDataModel
 import com.tmdb.data.model.state.DataState
 import com.tmdb.feature.home.reducer.HomeFeatureEffects
 import com.tmdb.feature.home.reducer.HomeFeatureSlice
-import com.tmdb.feature.home.reducer.HomeFeatureSliceImpl
 import com.tmdb.feature.reducer.util.ModelUtil
 import com.tmdb.store.action.HomeAction
 import com.tmdb.store.base.Effects
 import com.tmdb.store.env.contract.AppEnv
-import com.tmdb.store.state.app.AppState
+import com.tmdb.store.state.AppState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
@@ -37,7 +36,7 @@ class MovieSectionsLoadedReducerTest {
         )
 
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val homeFeatureSlice = HomeFeatureSlice(homeFeatureEffects)
 
         val appState = AppState.INITIAL.copy(
             homeState = AppState.INITIAL.homeState.copyAsAllLoading
@@ -73,7 +72,7 @@ class MovieSectionsLoadedReducerTest {
         )
 
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val homeFeatureSlice = HomeFeatureSlice(homeFeatureEffects)
 
         val appState = AppState.INITIAL.copy(homeState = AppState.INITIAL.homeState.copyAsAllLoading)
         val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, action)
@@ -107,7 +106,7 @@ class MovieSectionsLoadedReducerTest {
         )
 
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val homeFeatureSlice = HomeFeatureSlice(homeFeatureEffects)
 
         val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, action)
 
@@ -140,7 +139,7 @@ class MovieSectionsLoadedReducerTest {
         )
 
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val homeFeatureSlice = HomeFeatureSlice(homeFeatureEffects)
 
         val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, action)
 

@@ -1,6 +1,6 @@
 package com.tmdb.feature.movie.details.ui
 
-import com.tmdb.store.app.AppStore
+import com.tmdb.store.AppStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher

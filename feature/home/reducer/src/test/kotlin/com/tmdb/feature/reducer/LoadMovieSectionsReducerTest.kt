@@ -10,10 +10,9 @@ import com.tmdb.data.source.remote.contract.movie.MovieRemoteDataSource
 import com.tmdb.data.source.remote.contract.person.PersonRemoteDataSource
 import com.tmdb.feature.home.reducer.HomeFeatureEffects
 import com.tmdb.feature.home.reducer.HomeFeatureSlice
-import com.tmdb.feature.home.reducer.HomeFeatureSliceImpl
 import com.tmdb.feature.reducer.util.ModelUtil
 import com.tmdb.store.action.HomeAction
-import com.tmdb.store.state.app.AppState
+import com.tmdb.store.state.AppState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
@@ -37,7 +36,7 @@ class LoadMovieSectionsReducerTest {
     @Test
     fun `reduce load movie sections success`() = runTest {
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val homeFeatureSlice = HomeFeatureSlice(homeFeatureEffects)
         val appState = AppState.INITIAL
         val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, HomeAction.LoadMovieSections)
 
@@ -86,7 +85,7 @@ class LoadMovieSectionsReducerTest {
     @Test
     fun `reduce load movie sections api error`() = runTest {
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val homeFeatureSlice = HomeFeatureSlice(homeFeatureEffects)
         val appState = AppState.INITIAL
         val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, HomeAction.LoadMovieSections)
 
@@ -135,7 +134,7 @@ class LoadMovieSectionsReducerTest {
     fun `reduce load movie sections network error`() = runTest {
         val dataErrorMovies = DataState.NetworkError<List<MovieDataModel>>(ApiException.NetworkError())
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val homeFeatureSlice = HomeFeatureSlice(homeFeatureEffects)
         val appState = AppState.INITIAL
         val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, HomeAction.LoadMovieSections)
 
@@ -183,7 +182,7 @@ class LoadMovieSectionsReducerTest {
     fun `reduce load movie sections unknown error`() = runTest {
         val dataErrorMovies = DataState.Error<List<MovieDataModel>>(ApiException.UnknownError())
         val homeFeatureEffects = HomeFeatureEffects(testDispatcher)
-        val homeFeatureSlice: HomeFeatureSlice = HomeFeatureSliceImpl(homeFeatureEffects)
+        val homeFeatureSlice = HomeFeatureSlice(homeFeatureEffects)
         val appState = AppState.INITIAL
         val (homeFeatureState, effect) = homeFeatureSlice.reducer(appState, HomeAction.LoadMovieSections)
 

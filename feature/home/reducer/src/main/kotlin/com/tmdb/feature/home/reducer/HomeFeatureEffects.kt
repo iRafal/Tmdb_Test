@@ -6,7 +6,7 @@ import com.tmdb.store.base.Action
 import com.tmdb.store.base.Effect
 import com.tmdb.store.base.Effects
 import com.tmdb.store.env.contract.AppEnv
-import com.tmdb.store.feature.home.HomeFeature
+import com.tmdb.store.feature.HomeFeature
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -40,6 +40,6 @@ class HomeFeatureEffects(private val dispatcher: CoroutineDispatcher) {
     }
 
     private fun mainEffect(
-        effectExecutorScope: suspend Effect.Executor.Scope<AppEnv>.() -> Action
+        effectExecutorScope: suspend Effect.Scope<AppEnv>.() -> Action
     ): Effect<AppEnv> = Effects.effect(effectExecutorScope, HomeFeature)
 }

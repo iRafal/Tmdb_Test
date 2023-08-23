@@ -3,8 +3,8 @@ package com.tmdb.feature.home.ui
 import com.tmdb.feature.home.ui.data.mapping.HomeFeatureStateToUiStateMapper
 import com.tmdb.feature.home.ui.data.mapping.HomeMovieSectionToActionMapper
 import com.tmdb.feature.home.ui.data.model.HomeUiData
-import com.tmdb.store.app.AppStore
-import com.tmdb.store.state.app.AppState
+import com.tmdb.store.AppStore
+import com.tmdb.store.state.AppState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher

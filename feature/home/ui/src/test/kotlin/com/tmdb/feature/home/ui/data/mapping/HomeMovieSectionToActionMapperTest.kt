@@ -9,12 +9,12 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class HomeMovieSectionToActionMapperTest {
-    private val mapper: HomeMovieSectionToActionMapper = ::homeMovieSectionToActionMapperImpl
+    private val mapper: HomeMovieSectionToActionMapper = HomeMovieSectionToActionMapperImpl()
 
     @Test
     fun `test map Now Playing section to Action`() {
         val section = NOW_PLAYING
-        val actual = mapper.invoke(section)
+        val actual = mapper.map(section)
         val expected = HomeAction.ReloadNowPlayingMovies
         assertEquals(expected, actual)
     }
@@ -22,7 +22,7 @@ class HomeMovieSectionToActionMapperTest {
     @Test
     fun `test map Now Popular section to Action`() {
         val section = NOW_POPULAR
-        val actual = mapper.invoke(section)
+        val actual = mapper.map(section)
         val expected = HomeAction.ReloadNowPopularMovies
         assertEquals(expected, actual)
     }
@@ -30,7 +30,7 @@ class HomeMovieSectionToActionMapperTest {
     @Test
     fun `test map Top Rated section to Action`() {
         val section = TOP_RATED
-        val actual = mapper.invoke(section)
+        val actual = mapper.map(section)
         val expected = HomeAction.ReloadTopRatedMovies
         assertEquals(expected, actual)
     }
@@ -38,7 +38,7 @@ class HomeMovieSectionToActionMapperTest {
     @Test
     fun `test map Upcoming section to Action`() {
         val section = UPCOMING
-        val actual = mapper.invoke(section)
+        val actual = mapper.map(section)
         val expected = HomeAction.ReloadUpcomingMovies
         assertEquals(expected, actual)
     }

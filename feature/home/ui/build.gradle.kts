@@ -65,7 +65,7 @@ fun DependencyHandlerScope.kaptDependencies() {
 fun DependencyHandlerScope.implementationDependencies() {
     implementation(project(":ui-core"))
     implementation(project(":util"))
-    implementation(project(":store:app"))
+    implementation(project(":store:app-store"))
 
     implementation(libs.dagger)
 }

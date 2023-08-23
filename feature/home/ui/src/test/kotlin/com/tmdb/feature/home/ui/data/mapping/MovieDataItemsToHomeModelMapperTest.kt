@@ -6,14 +6,13 @@ import org.junit.Test
 
 class MovieDataItemsToHomeModelMapperTest {
 
-    private val itemMapper: MovieDataToHomeModelMapper = movieDataToHomeModelMapperImpl()
-    private val listMapper: MovieDataItemsToHomeModelMapper =
-        movieDataItemsToHomeModelMapperImpl(itemMapper)
+    private val itemMapper: MovieDataToHomeModelMapper = MovieDataToHomeModelMapperImpl()
+    private val listMapper: MovieDataItemsToHomeModelMapper = MovieDataItemsToHomeModelMapperImpl(itemMapper)
 
     @Test
     fun mapModel() {
         val input = listOf(ModelUtil.movieDataModel)
-        val actual = listMapper.invoke(input)
+        val actual = listMapper.map(input)
         val expected = listOf(ModelUtil.uiModelMovie)
         assertEquals(expected, actual)
     }

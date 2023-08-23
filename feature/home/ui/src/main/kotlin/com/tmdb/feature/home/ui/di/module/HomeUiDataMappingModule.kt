@@ -1,42 +1,28 @@
 package com.tmdb.feature.home.ui.di.module
 
-import com.tmdb.feature.home.ui.data.mapping.HomeDataStateToUiStateMapper
 import com.tmdb.feature.home.ui.data.mapping.HomeFeatureStateToUiStateMapper
+import com.tmdb.feature.home.ui.data.mapping.HomeFeatureStateToUiStateMapperImpl
 import com.tmdb.feature.home.ui.data.mapping.HomeMovieSectionToActionMapper
+import com.tmdb.feature.home.ui.data.mapping.HomeMovieSectionToActionMapperImpl
 import com.tmdb.feature.home.ui.data.mapping.MovieDataItemsToHomeModelMapper
+import com.tmdb.feature.home.ui.data.mapping.MovieDataItemsToHomeModelMapperImpl
 import com.tmdb.feature.home.ui.data.mapping.MovieDataToHomeModelMapper
-import com.tmdb.feature.home.ui.data.mapping.homeFeatureToUiStateMapperImpl
-import com.tmdb.feature.home.ui.data.mapping.homeMovieSectionToActionMapperImpl
-import com.tmdb.feature.home.ui.data.mapping.movieDataItemsToHomeModelMapperImpl
-import com.tmdb.feature.home.ui.data.mapping.movieDataToHomeModelMapperImpl
-import com.tmdb.ui.core.data.mapping.mapDataStateToUiState
+import com.tmdb.feature.home.ui.data.mapping.MovieDataToHomeModelMapperImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 
 @Module
-object HomeUiDataMappingModule {
-    @Provides
-    fun homeFeatureToUiStateMapper(
-        homeDataStateToUiStateMapper: @JvmSuppressWildcards HomeDataStateToUiStateMapper
-    ): @JvmSuppressWildcards HomeFeatureStateToUiStateMapper =
-        homeFeatureToUiStateMapperImpl(homeDataStateToUiStateMapper)
+interface HomeUiDataMappingModule {
+    @Binds
+    fun homeFeatureToUiStateMapper(impl: HomeFeatureStateToUiStateMapperImpl): HomeFeatureStateToUiStateMapper
 
-    @Provides
-    fun homeFeatureStateToUiSectionStateMapper(
-        movieDataItemsToHomeModelMapper: @JvmSuppressWildcards MovieDataItemsToHomeModelMapper
-    ): @JvmSuppressWildcards HomeDataStateToUiStateMapper =
-        mapDataStateToUiState(movieDataItemsToHomeModelMapper)
+    @Binds
+    fun movieDataItemsToHomeModelMapper(impl: MovieDataItemsToHomeModelMapperImpl): MovieDataItemsToHomeModelMapper
 
-    @Provides
-    fun movieDataItemsToHomeModelMapper(
-        movieDataToHomeModelMapper: @JvmSuppressWildcards MovieDataToHomeModelMapper
-    ): @JvmSuppressWildcards MovieDataItemsToHomeModelMapper =
-        movieDataItemsToHomeModelMapperImpl(movieDataToHomeModelMapper)
+    @Binds
+    fun movieDataToHomeModelMapper(impl: MovieDataToHomeModelMapperImpl): MovieDataToHomeModelMapper
 
-    @Provides
-    fun movieDataToHomeModelMapper(): @JvmSuppressWildcards MovieDataToHomeModelMapper = movieDataToHomeModelMapperImpl()
-
-    @Provides
-    fun homeMovieSectionToActionMapper(): @JvmSuppressWildcards HomeMovieSectionToActionMapper = ::homeMovieSectionToActionMapperImpl
+    @Binds
+    fun homeMovieSectionToActionMapper(impl: HomeMovieSectionToActionMapperImpl): HomeMovieSectionToActionMapper
 }

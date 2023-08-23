@@ -7,23 +7,22 @@ import com.tmdb.feature.home.ui.data.model.HomeMovieSection.TOP_RATED
 import com.tmdb.feature.home.ui.data.model.HomeMovieSection.UPCOMING
 import com.tmdb.feature.home.ui.data.model.HomeUiData
 import com.tmdb.feature.home.ui.util.ModelUtil
-import com.tmdb.store.state.home.HomeFeatureState
+import com.tmdb.store.state.HomeFeatureState
 import com.tmdb.ui.core.data.UiState
-import com.tmdb.ui.core.data.mapping.mapDataStateToUiState
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class HomeFeatureDataToUiStateMapperTest {
-    private val movieDataToHomeModelMapper: MovieDataToHomeModelMapper = movieDataToHomeModelMapperImpl()
+    private val movieDataToHomeModelMapper: MovieDataToHomeModelMapper = MovieDataToHomeModelMapperImpl()
     private val movieDataItemsToHomeModelMapper: MovieDataItemsToHomeModelMapper =
-        movieDataItemsToHomeModelMapperImpl(movieDataToHomeModelMapper)
-    private val homeDataStateToUiStateMapper: HomeDataStateToUiStateMapper = mapDataStateToUiState(movieDataItemsToHomeModelMapper)
-    private val mapper: HomeFeatureStateToUiStateMapper = homeFeatureToUiStateMapperImpl(homeDataStateToUiStateMapper)
+        MovieDataItemsToHomeModelMapperImpl(movieDataToHomeModelMapper)
+    private val homeDataStateToUiStateMapper = HomeDataStateToUiStateMapper(movieDataItemsToHomeModelMapper)
+    private val mapper: HomeFeatureStateToUiStateMapper = HomeFeatureStateToUiStateMapperImpl(homeDataStateToUiStateMapper)
 
     @Test
     fun mapHomeFeatureLoadingStateToUiState() {
         val input = HomeFeatureState.INITIAL.copyAsAllLoading
-        val actual = mapper.invoke(input)
+        val actual = mapper.map(input)
         val expected = HomeUiData(
             mapOf(
                 NOW_PLAYING to UiState.Loading(),
@@ -51,7 +50,7 @@ class HomeFeatureDataToUiStateMapperTest {
                 UPCOMING to UiState.NetworkError()
             )
         )
-        val actual = mapper.invoke(input)
+        val actual = mapper.map(input)
         assertEquals(expected, actual)
     }
 
@@ -71,7 +70,7 @@ class HomeFeatureDataToUiStateMapperTest {
                 UPCOMING to UiState.Error()
             )
         )
-        val actual = mapper.invoke(input)
+        val actual = mapper.map(input)
         assertEquals(expected, actual)
     }
 
@@ -99,7 +98,7 @@ class HomeFeatureDataToUiStateMapperTest {
                 UPCOMING to UiState.Success(listOf(ModelUtil.uiModelMovie.copy(id = 3)))
             )
         )
-        val actual = mapper.invoke(input)
+        val actual = mapper.map(input)
         assertEquals(expected, actual)
     }
 }

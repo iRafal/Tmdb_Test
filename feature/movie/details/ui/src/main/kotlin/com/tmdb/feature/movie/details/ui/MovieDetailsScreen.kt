@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.tmdb.feature.movie.details.ui.MovieDetailsUiEvent.NavigateBack
 import com.tmdb.feature.movie.details.ui.MovieDetailsUiState.Loading
-import com.tmdb.feature.movie.details.ui.util.movieDetailsFeatureComponent
+import com.tmdb.feature.movie.details.ui.di.movieDetailsFeatureComponent
 import com.tmdb.ui.core.compose.daggerViewModel
 import com.tmdb.ui.core.navigation.model.NavigationRoute
 

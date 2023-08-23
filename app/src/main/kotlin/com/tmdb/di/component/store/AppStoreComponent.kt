@@ -3,8 +3,8 @@ package com.tmdb.di.component.store
 import android.content.Context
 import com.tmdb.data.source.local.impl.di.component.LocalDataSourceInjections
 import com.tmdb.data.source.remote.implKtor.di.component.RemoteDataSourceInjections
-import com.tmdb.di.component.store.module.app.AppStoreModule
-import com.tmdb.store.app.AppStore
+import com.tmdb.store.di.module.app.AppStoreModule
+import com.tmdb.store.AppStore
 import com.tmdb.utill.di.qualifiers.ApplicationContext
 import com.tmdb.utill.di.qualifiers.ApplicationScope
 import dagger.BindsInstance

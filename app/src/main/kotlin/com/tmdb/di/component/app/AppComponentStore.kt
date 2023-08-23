@@ -1,7 +1,7 @@
 package com.tmdb.di.component.app
 
 import android.content.Context
-import com.tmdb.store.app.AppStore
+import com.tmdb.store.AppStore
 import com.tmdb.di.component.store.AppStoreComponentStore
 import com.tmdb.utill.di.qualifiers.ApplicationContext
 
