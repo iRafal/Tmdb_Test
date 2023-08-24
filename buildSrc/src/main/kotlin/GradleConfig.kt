@@ -4,10 +4,10 @@ import org.gradle.api.JavaVersion
 object GradleConfig {
 
     object Android {
-        const val compileSdk = 33
+        const val compileSdk = 34
         const val applicationId = "com.tmdb"
         const val minSdk = 26
-        const val targetSdk = 33
+        const val targetSdk = 34
 
         const val isMinifyEnabledDebug = false
         const val isMinifyEnabledRelease = false
