@@ -34,8 +34,8 @@ hilt-navigation-compose = "1.0.0"
 dagger = "2.47"
 
 #KOTLIN
-kotlin = "1.8.22" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-kotlin-compiler-extension = "1.4.8" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+kotlin = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+kotlin-compiler-extension = "1.5.2" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 kotlin-coroutines = "1.7.3" # https://github.com/kotlin/kotlinx.coroutines
 kotlin-serialization-json = "1.6.0" # https://github.com/Kotlin/kotlinx.serialization
 
@@ -49,7 +49,7 @@ coil = "2.4.0" # https://github.com/coil-kt/coil
 
 #COMPOSE
 compose-animation = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-animation
-compose-compiler = "1.4.7" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
+compose-compiler = "1.5.2" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 compose-foundation = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-foundation
 compose-material = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-material
 compose-material3 = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/compose-material3
@@ -64,7 +64,7 @@ compose-navigation = "2.7.1" # https://developer.android.com/jetpack/androidx/re
 compose-constraintLayout = "1.0.1"
 
 #STORAGE
-room = "2.5.2" # https://developer.android.com/jetpack/androidx/releases/room
+room = "2.6.0-beta01" # https://developer.android.com/jetpack/androidx/releases/room
 
 #NETWORK
 ktor = "2.3.3" # https://github.com/ktorio/ktor
