@@ -3,13 +3,13 @@ package com.tmdb.ui.core.navigation.model
 import androidx.annotation.VisibleForTesting
 
 sealed class NavigationRoute(val route: String) {
-    object Home : NavigationRoute(ROUTE_HOME)
-    object MovieDetails : NavigationRoute(ROUTE_MOVIE_DETAILS) {
+    data object Home : NavigationRoute(ROUTE_HOME)
+    data object MovieDetails : NavigationRoute(ROUTE_MOVIE_DETAILS) {
         const val ARG_MOVIE_ID = "movieId"
         fun getRouteNameWithArguments(movieId: String): String = "movie/details?movieId=$movieId"
     }
 
-    object Close : NavigationRoute(ROUTE_CLOSE)
+    data object Close : NavigationRoute(ROUTE_CLOSE)
 
     companion object {
         @VisibleForTesting

@@ -5,7 +5,7 @@ import com.tmdb.data.model.state.DataState
 import com.tmdb.store.base.Action
 
 sealed interface HomeAction : Action {
-    object LoadMovieSections : HomeAction
+    data object LoadMovieSections : HomeAction
     data class MovieSectionsLoaded(
         val nowPlayingMovies: DataState<List<MovieDataModel>>,
         val nowPopularMovies: DataState<List<MovieDataModel>>,
@@ -13,8 +13,8 @@ sealed interface HomeAction : Action {
         val upcomingMovies: DataState<List<MovieDataModel>>
     ) : HomeAction
 
-    object ReloadNowPlayingMovies : HomeAction
-    object ReloadNowPopularMovies : HomeAction
-    object ReloadTopRatedMovies : HomeAction
-    object ReloadUpcomingMovies : HomeAction
+    data object ReloadNowPlayingMovies : HomeAction
+    data object ReloadNowPopularMovies : HomeAction
+    data object ReloadTopRatedMovies : HomeAction
+    data object ReloadUpcomingMovies : HomeAction
 }
