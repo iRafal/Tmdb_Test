@@ -21,7 +21,7 @@ realm-plugin = "10.16.1" # https://github.com/realm/realm-java
 
 # https://mvnrepository.com/artifact/com.google.dagger/hilt-android
 # https://dagger.dev/hilt/gradle-setup.html
-hilt = "2.47"
+hilt = "2.48"
 
 # https://developer.android.com/training/dependency-injection/hilt-jetpack
 # https://developer.android.com/topic/libraries/architecture/workmanager/advanced/custom-configuration
@@ -31,16 +31,16 @@ hilt-work = "1.0.0"
 hilt-navigation-compose = "1.0.0"
 
 # https://github.com/google/dagger/releases
-dagger = "2.47"
+dagger = "2.48"
 
 #KOTLIN
-kotlin = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-kotlin-compiler-extension = "1.5.2" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+kotlin = "1.9.10" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+kotlin-compiler-extension = "1.5.3" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 kotlin-coroutines = "1.7.3" # https://github.com/kotlin/kotlinx.coroutines
 kotlin-serialization-json = "1.6.0" # https://github.com/Kotlin/kotlinx.serialization
 
 #ANDROIDX
-androidx-core = "1.10.1" # https://developer.android.com/jetpack/androidx/releases/core
+androidx-core = "1.12.0-rc01" # https://developer.android.com/jetpack/androidx/releases/core
 androidx-lifecycle = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-work = "2.8.1" # https://developer.android.com/jetpack/androidx/releases/work
 
@@ -49,7 +49,7 @@ coil = "2.4.0" # https://github.com/coil-kt/coil
 
 #COMPOSE
 compose-animation = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-animation
-compose-compiler = "1.5.2" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
+compose-compiler = "1.5.3" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 compose-foundation = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-foundation
 compose-material = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-material
 compose-material3 = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/compose-material3
@@ -67,7 +67,7 @@ compose-constraintLayout = "1.0.1"
 room = "2.6.0-beta01" # https://developer.android.com/jetpack/androidx/releases/room
 
 #NETWORK
-ktor = "2.3.3" # https://github.com/ktorio/ktor
+ktor = "2.3.4" # https://github.com/ktorio/ktor
 retrofit2 = "2.9.0" # https://github.com/square/retrofit
 retrofit2-serializationConverter = "1.0.0" # https://github.com/jakewharton/retrofit2-kotlinx-serialization-converter
 okhttp3-loggingInterceptor = "4.11.0" # https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
@@ -85,8 +85,8 @@ junit-android-ext = "1.1.5"
 # https://developer.android.com/jetpack/androidx/releases/test
 espresso = "3.5.1"
 
-mockito = "5.3.1" # https://github.com/mockito/mockito
-mockito-kotlin = "5.0.0" # https://github.com/mockito/mockito-kotlin
+mockito = "5.5.0" # https://github.com/mockito/mockito
+mockito-kotlin = "5.1.0" # https://github.com/mockito/mockito-kotlin
 
 #TOOLS
 leakcanary = "2.12" # https://square.github.io/leakcanary/getting_started/
