@@ -1,13 +1,6 @@
 plugins {
-    id(GradleConfig.Plugins.JAVA_LIBRARY)
-    id(GradleConfig.Plugins.KOTLIN)
-    id(GradleConfig.Plugins.KOTLIN_JVM)
     id(GradleConfig.Plugins.KOTLINX_SERIALIZATION)
-}
-
-java {
-    sourceCompatibility = GradleConfig.javaVersion
-    targetCompatibility = GradleConfig.javaVersion
+    id(GradleConfig.Plugins.COMMON_JAVA_LIBRARY)
 }
 
 dependencies {
