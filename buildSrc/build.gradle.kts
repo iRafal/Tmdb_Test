@@ -15,3 +15,13 @@ gradlePlugin {
         }
     }
 }
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly(gradleApi())
+    implementation("com.android.tools.build:gradle:8.1.1")
+}

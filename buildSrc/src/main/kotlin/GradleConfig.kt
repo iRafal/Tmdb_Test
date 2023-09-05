@@ -34,5 +34,6 @@ object GradleConfig {
         const val REALM = "realm-android"
         const val OBJECTBOX = "io.objectbox"
         const val COMMON_JAVA_LIBRARY = "common-java-library-plugin"
+        const val COMMON_ANDROID_LIBRARY = "common-android-library-plugin"
     }
 }
