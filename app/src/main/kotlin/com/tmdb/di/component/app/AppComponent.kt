@@ -4,8 +4,8 @@ import android.content.Context
 import coil.ImageLoader
 import com.tmdb.MovieApp
 import com.tmdb.di.component.app.module.AppModule
-import com.tmdb.store.AppStore
 import com.tmdb.ui.core.di.base.HasAppContext
+import com.tmdb.ui.core.di.base.HasAppStore
 import com.tmdb.ui.main.MainActivity
 import com.tmdb.utill.di.qualifiers.ApplicationContext
 import com.tmdb.utill.di.qualifiers.ApplicationScope
@@ -29,9 +29,7 @@ interface AppComponent: HasAppContext {
     }
 }
 
-interface AppComponentDependencies {
+interface AppComponentDependencies: HasAppStore {
     @get:ApplicationContext
     val applicationContext: Context
-
-    val appStore: AppStore
 }

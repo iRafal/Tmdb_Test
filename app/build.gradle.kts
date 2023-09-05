@@ -23,7 +23,7 @@ android {
     }
 
     buildTypes {
-        getByName("debug") {
+        debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
 
@@ -36,7 +36,7 @@ android {
                 }
             }
         }
-        getByName("release") {
+        release {
             isShrinkResources = GradleConfig.Android.isShrinkResourcesRelease
             isMinifyEnabled = GradleConfig.Android.isMinifyEnabledRelease
 
@@ -108,7 +108,6 @@ dependencies {
 }
 
 fun DependencyHandlerScope.implementationDependencies() {
-    implementation(project(":util"))
     implementation(project(":store:app-store"))
     implementation(project(":data:source:local:contract"))
     implementation(project(":data:source:local:impl"))

@@ -64,7 +64,7 @@ fun DependencyHandlerScope.implementationDependencies() {
 }
 
 fun DependencyHandlerScope.apiDependencies() {
-    implementation(project(":util"))
+    api(project(":util"))
 
     api(libs.androidx.core)
 

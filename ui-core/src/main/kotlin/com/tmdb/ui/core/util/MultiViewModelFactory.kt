@@ -1,4 +1,4 @@
-package com.tmdb.ui
+package com.tmdb.ui.core.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
