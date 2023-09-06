@@ -17,9 +17,9 @@ android {
         versionCode = 1
         versionName = Version(major = 1, minor = 0, patch = 0).name
 
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        vectorDrawables.useSupportLibrary = true
+
+        setProperty("archivesBaseName", "$applicationId-$versionName-$versionCode")
     }
 
     buildTypes {
@@ -35,6 +35,8 @@ android {
                     arg("dagger.formatGeneratedSource", "disabled")
                 }
             }
+
+            resValue("string", "app_name", "Tmdb-Debug")
         }
         release {
             isShrinkResources = GradleConfig.Android.isShrinkResourcesRelease
@@ -46,10 +48,13 @@ android {
                 }
             }
 
+            // https://stackoverflow.com/questions/60861929/what-is-the-difference-between-consumer-rules-pro-and-proguard-rules-pro-in-andr
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            resValue("string", "app_name", "Tmdb")
         }
     }
     compileOptions {
@@ -62,9 +67,8 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.kotlin.compiler.extension.get()
-    }
+    composeOptions.kotlinCompilerExtensionVersion = libs.versions.kotlin.compiler.extension.get()
+
     packaging {
         resources {
             this.excludes.addAll(GradleConfig.Android.excludePackagingResources)
