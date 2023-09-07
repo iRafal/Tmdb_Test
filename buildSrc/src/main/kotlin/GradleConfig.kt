@@ -10,10 +10,10 @@ object GradleConfig {
         const val targetSdk = 34
 
         const val isMinifyEnabledDebug = false
-        const val isMinifyEnabledRelease = false
+        const val isMinifyEnabledRelease = true
 
         const val isShrinkResourcesDebug = false
-        const val isShrinkResourcesRelease = false
+        const val isShrinkResourcesRelease = true
 
         val excludePackagingResources = arrayOf("/META-INF/{AL2.0,LGPL2.1}", "/META-INF/gradle/incremental.annotation.processors")
     }

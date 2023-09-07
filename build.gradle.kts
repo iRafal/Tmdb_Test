@@ -39,6 +39,13 @@ allprojects {
  * ./gradlew cAT
  */
 
+ю/**
+ * Lint terminal https://developer.android.com/studio/write/lint
+ * ./gradlew lint
+ * ./gradlew lintDebug
+ * ./gradlew lintRelease
+ */
+
 /**
  * Mac
  * chmod +x gradlew (id needed, https://stackoverflow.com/questions/17668265/gradlew-permission-denied)
