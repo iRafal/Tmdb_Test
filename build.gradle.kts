@@ -39,7 +39,7 @@ allprojects {
  * ./gradlew cAT
  */
 
-ю/**
+/**
  * Lint terminal https://developer.android.com/studio/write/lint
  * ./gradlew lint
  * ./gradlew lintDebug
