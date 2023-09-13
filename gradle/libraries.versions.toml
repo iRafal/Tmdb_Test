@@ -40,24 +40,24 @@ kotlin-coroutines = "1.7.3" # https://github.com/kotlin/kotlinx.coroutines
 kotlin-serialization-json = "1.6.0" # https://github.com/Kotlin/kotlinx.serialization
 
 #ANDROIDX
-androidx-core = "1.12.0-rc01" # https://developer.android.com/jetpack/androidx/releases/core
-androidx-lifecycle = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+androidx-core = "1.12.0" # https://developer.android.com/jetpack/androidx/releases/core
+androidx-lifecycle = "2.6.2" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidx-work = "2.8.1" # https://developer.android.com/jetpack/androidx/releases/work
 
 #COIL
 coil = "2.4.0" # https://github.com/coil-kt/coil
 
 #COMPOSE
-compose-animation = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-animation
+compose-animation = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/compose-animation
 compose-compiler = "1.5.3" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
-compose-foundation = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-foundation
-compose-material = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-material
+compose-foundation = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/compose-foundation
+compose-material = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/compose-material
 compose-material3 = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/compose-material3
-compose-runtime = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-runtime
-compose-ui = "1.5.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
+compose-runtime = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/compose-runtime
+compose-ui = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 
 compose-activity = "1.7.2" # https://developer.android.com/jetpack/androidx/releases/activity
-compose-navigation = "2.7.1" # https://developer.android.com/jetpack/androidx/releases/navigation
+compose-navigation = "2.7.2" # https://developer.android.com/jetpack/androidx/releases/navigation
 
 # https://developer.android.com/jetpack/compose/layouts/constraintlayout
 # https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout-compose?repo=google
