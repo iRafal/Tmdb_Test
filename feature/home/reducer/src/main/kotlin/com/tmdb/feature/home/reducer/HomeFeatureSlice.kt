@@ -12,17 +12,16 @@ import com.tmdb.store.state.HomeFeatureState
 
 
 class HomeFeatureSlice(
-    homeFeatureEffects: HomeFeatureEffects
+    private val homeFeatureEffects: HomeFeatureEffects
 ) : FeatureSlice<AppState, AppEnv, HomeFeatureState> {
-
-    override val reducer: FeatureReducer<AppState, AppEnv, HomeFeatureState> =
-        { globalState: AppState,
-          action: Action ->
+    override fun getReducer(): FeatureReducer<AppState, AppEnv, HomeFeatureState> {
+        return FeatureReducer { globalState: AppState,action: Action ->
             when (action) {
                 is HomeAction -> globalState.reduce(action, homeFeatureEffects)
                 else -> globalState.homeState to Effects.empty()
             }
         }
+    }
 }
 
 private fun AppState.reduce(
@@ -34,11 +33,7 @@ private fun AppState.reduce(
         is HomeAction.ReloadNowPopularMovies -> this.homeState.reduceReloadNowPopularMovies(action)
         is HomeAction.ReloadTopRatedMovies -> this.homeState.reduceReloadTopRatedMovies(action)
         is HomeAction.ReloadUpcomingMovies -> this.homeState.reduceReloadUpcomingMovies(action)
-        is HomeAction.LoadMovieSections -> {
-            this.homeState.reduceLoadMovieSections(action, homeFeatureEffects)
-        }
-        is HomeAction.MovieSectionsLoaded -> {
-            this.homeState.reduceMovieSectionsLoaded(action)
-        }
+        is HomeAction.LoadMovieSections -> this.homeState.reduceLoadMovieSections(action, homeFeatureEffects)
+        is HomeAction.MovieSectionsLoaded -> this.homeState.reduceMovieSectionsLoaded(action)
     }
 }

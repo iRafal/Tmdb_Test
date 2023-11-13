@@ -25,6 +25,7 @@ allprojects {
 
     /**
      * ./gradlew detekt
+     * ./gradlew detektBaseline - prefer using this one
      */
     apply(plugin = "io.gitlab.arturbosch.detekt")
 }
@@ -88,9 +89,20 @@ subprojects {
     }
 }
 
+// https://detekt.dev/docs/gettingstarted/gradle#kotlin-dsl-3
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
     config.setFrom(file("config/detekt/detekt.yml"))
+    baseline.set(file("${rootProject.projectDir}/config/detekt/baseline.xml"))
+    include("**/*.kt")
+    exclude("**/build/**")
+    setSource(projectDir)
+    allRules = false
+    parallel = false
+    disableDefaultRuleSets = false
     buildUponDefaultConfig = true
+    debug = false
+    ignoreFailures = false
+    basePath = projectDir.absolutePath
     reports {
         xml.required.set(true)
         html.required.set(true)
@@ -101,8 +113,22 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
     jvmTarget = GradleConfig.javaVersionAsString
 }
 
+/**
+ * https://detekt.dev/docs/introduction/baseline/
+ */
 tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
     jvmTarget = GradleConfig.javaVersionAsString
+    description = "Overrides current baseline."
+    buildUponDefaultConfig.set(true)
+    ignoreFailures.set(true)
+    parallel.set(true)
+    setSource(files(rootDir))
+    config.setFrom(files("config/detekt/detekt.yml"))
+    baseline.set(file("config/detekt/baseline.xml"))
+    include("**/*.kt")
+    include("**/*.kts")
+    exclude("**/resources/**")
+    exclude("**/build/**")
 }
 
 tasks.register("clean", Delete::class) {

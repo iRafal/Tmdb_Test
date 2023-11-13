@@ -8,17 +8,14 @@ import com.tmdb.store.base.feature.FeatureReducer
 import com.tmdb.store.base.feature.FeatureSlice
 import com.tmdb.store.env.contract.AppEnv
 import com.tmdb.store.state.AppState
-import  com.tmdb.store.state.MovieDetailsFeatureState
+import com.tmdb.store.state.MovieDetailsFeatureState
 
 
-object MovieDetailsFeatureSlice : FeatureSlice<AppState, AppEnv, MovieDetailsFeatureState> {
-    override val reducer: FeatureReducer<AppState, AppEnv, MovieDetailsFeatureState> =
-        { globalState: AppState,
-          action: Action ->
+class MovieDetailsFeatureSlice : FeatureSlice<AppState, AppEnv, MovieDetailsFeatureState> {
+    override fun getReducer(): FeatureReducer<AppState, AppEnv, MovieDetailsFeatureState> =
+        FeatureReducer { globalState: AppState, action: Action ->
             when (action) {
-                is MovieDetailsAction -> {
-                    reduce(action)
-                }
+                is MovieDetailsAction -> reduce(action)
                 else -> globalState.movieDetailsState to Effects.empty()
             }
         }

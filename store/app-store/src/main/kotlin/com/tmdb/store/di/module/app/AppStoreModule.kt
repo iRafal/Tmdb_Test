@@ -18,7 +18,7 @@ object AppStoreModule {
     @[Provides ApplicationScope]
     fun appStore(
         appEnv: AppEnv,
-        appReducer: @JvmSuppressWildcards AppReducer,
+        appReducer: AppReducer,
         @DispatcherIo dispatcher: CoroutineDispatcher,
     ): AppStore = AppStore.create(
         appReducer,

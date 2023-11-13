@@ -45,7 +45,7 @@ private class StoreImpl<S, E>(
     override val stateFlow = MutableStateFlow(initialState)
 
     override fun dispatch(action: Action): Unit = synchronized(stateFlow) {
-        val (newState, effect) = reducer(stateFlow.value, action)
+        val (newState, effect) = reducer.reduce(stateFlow.value, action)
         stateFlow.value = newState
         effect?.invoke(this)
     }

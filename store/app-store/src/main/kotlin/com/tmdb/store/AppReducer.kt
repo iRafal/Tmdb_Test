@@ -2,26 +2,26 @@ package com.tmdb.store
 
 import com.tmdb.feature.home.reducer.HomeFeatureSlice
 import com.tmdb.feature.movie.details.reducer.MovieDetailsFeatureSlice
+import com.tmdb.store.base.Action
 import com.tmdb.store.base.Effects
+import com.tmdb.store.base.ReducedResult
 import com.tmdb.store.base.Reducer
 import com.tmdb.store.env.contract.AppEnv
 import com.tmdb.store.state.AppState
+import javax.inject.Inject
 
-typealias AppReducer = Reducer<AppState, AppEnv>
+fun interface AppReducer: Reducer<AppState, AppEnv>
 
-fun createAppReducer(
-    homeFeatureSlice: HomeFeatureSlice,
-    movieDetailsFeatureSlice: MovieDetailsFeatureSlice
+class AppReducerImpl @Inject constructor(
+    private val homeFeatureSlice: HomeFeatureSlice,
+    private val movieDetailsFeatureSlice: MovieDetailsFeatureSlice
 ): AppReducer {
-    return { state, action ->
-        val (homeState, homeEffect) = homeFeatureSlice.reducer(state, action)
-        val (movieDetailsState, movieDetailsEffect) = movieDetailsFeatureSlice.reducer(
-            state,
-            action
-        )
+    override fun reduce(state: AppState, action: Action): ReducedResult<AppState, AppEnv> {
+        val (homeState, homeEffect) = homeFeatureSlice.getReducer().map(state, action)
+        val (movieDetailsState, movieDetailsEffect) = movieDetailsFeatureSlice.getReducer().map(state, action)
 
         val newGlobalState =
             state.copy(homeState = homeState, movieDetailsState = movieDetailsState)
-        newGlobalState to Effects.merge(homeEffect, movieDetailsEffect)
+        return newGlobalState to Effects.merge(homeEffect, movieDetailsEffect)
     }
 }
