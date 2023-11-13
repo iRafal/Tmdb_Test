@@ -17,8 +17,8 @@ class AppReducerImpl @Inject constructor(
     private val movieDetailsFeatureSlice: MovieDetailsFeatureSlice
 ): AppReducer {
     override fun reduce(state: AppState, action: Action): ReducedResult<AppState, AppEnv> {
-        val (homeState, homeEffect) = homeFeatureSlice.getReducer().map(state, action)
-        val (movieDetailsState, movieDetailsEffect) = movieDetailsFeatureSlice.getReducer().map(state, action)
+        val (homeState, homeEffect) = homeFeatureSlice.reducer.map(state, action)
+        val (movieDetailsState, movieDetailsEffect) = movieDetailsFeatureSlice.reducer.map(state, action)
 
         val newGlobalState =
             state.copy(homeState = homeState, movieDetailsState = movieDetailsState)

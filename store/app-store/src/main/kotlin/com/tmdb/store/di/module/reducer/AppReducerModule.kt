@@ -15,8 +15,5 @@ object AppReducerModule {
     val movieDetailsFeatureSlice = MovieDetailsFeatureSlice()
 
     @Provides
-    fun appReducer(
-        movieDetailsFeatureSlice: MovieDetailsFeatureSlice,
-        homeFeatureSlice: HomeFeatureSlice,
-    ): AppReducer = AppReducerImpl(homeFeatureSlice, movieDetailsFeatureSlice)
+    fun appReducer(impl: AppReducerImpl): AppReducer = impl
 }

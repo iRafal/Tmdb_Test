@@ -9,17 +9,17 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-interface Store<S, Env> {
+interface Store<S, Env>: Effect.Executor<Env>, Effect.Scope<Env> {
     val state: S
         get() = stateFlow.value
 
     val stateFlow: StateFlow<S>
 
-    val env: Env
+    override val env: Env
 
-    fun dispatch(action: Action)
+    override fun dispatch(action: Action)
 
-    fun execute(feature: Feature, effectBlock: suspend Effect.Scope<Env>.() -> Unit)
+    override fun execute(feature: Feature, effectBlock: suspend Effect.Scope<Env>.() -> Unit)
 
     fun setFeatureScope(feature: Feature, scope: CoroutineScope)
 }

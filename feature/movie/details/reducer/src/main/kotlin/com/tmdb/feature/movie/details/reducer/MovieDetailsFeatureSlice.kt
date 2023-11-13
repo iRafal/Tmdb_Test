@@ -12,7 +12,7 @@ import com.tmdb.store.state.MovieDetailsFeatureState
 
 
 class MovieDetailsFeatureSlice : FeatureSlice<AppState, AppEnv, MovieDetailsFeatureState> {
-    override fun getReducer(): FeatureReducer<AppState, AppEnv, MovieDetailsFeatureState> =
+    override val reducer: FeatureReducer<AppState, AppEnv, MovieDetailsFeatureState> =
         FeatureReducer { globalState: AppState, action: Action ->
             when (action) {
                 is MovieDetailsAction -> reduce(action)
