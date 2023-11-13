@@ -80,7 +80,7 @@ android {
 kapt {
     arguments {
         arg("dagger.fastInit", "enabled")
-        arg("dagger.fullBindingGraphValidation", "ERROR") //"WARNING"
+        arg("dagger.fullBindingGraphValidation", "ERROR") // "WARNING"
     }
 }
 

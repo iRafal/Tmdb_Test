@@ -1,15 +1,15 @@
 package com.tmdb.store.base
 
 import com.tmdb.store.base.feature.Feature
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
-interface Store<S, Env>: Effect.Executor<Env>, Effect.Scope<Env> {
+interface Store<S, Env> : Effect.Executor<Env>, Effect.Scope<Env> {
     val state: S
         get() = stateFlow.value
 
@@ -28,7 +28,7 @@ fun <S, E> createStore(
     initialState: S,
     reducer: Reducer<S, E>,
     env: E,
-    effectContext: CoroutineContext,
+    effectContext: CoroutineContext
 ): Store<S, E> {
     return StoreImpl(initialState, reducer, env, effectContext)
 }
@@ -37,7 +37,7 @@ private class StoreImpl<S, E>(
     initialState: S,
     private val reducer: Reducer<S, E>,
     override val env: E,
-    private val effectContext: CoroutineContext,
+    private val effectContext: CoroutineContext
 ) : Store<S, E>, Effect.Executor<E>, Effect.Scope<E> {
 
     private val scopesByFeature = mutableMapOf<Feature, CoroutineScope>()

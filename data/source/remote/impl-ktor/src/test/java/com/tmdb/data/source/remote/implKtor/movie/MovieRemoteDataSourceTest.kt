@@ -37,7 +37,7 @@ class MovieRemoteDataSourceTest {
 
     private val expectedErrorBody = ApiErrorImpl()
     private val expectedErrorCode = 500
-    private val expectedApiErrorException = Throwable("Body: [${expectedErrorBody}], code=${expectedErrorCode}")
+    private val expectedApiErrorException = Throwable("Body: [$expectedErrorBody], code=$expectedErrorCode")
     private val expectedApiErrorResponse = ApiResponse.ApiError(expectedErrorBody, expectedErrorCode)
 
     private val expectedUnknownException = Throwable("Unknown Exception")

@@ -4,7 +4,6 @@ plugins {
     id(GradleConfig.Plugins.KOTLIN_KAPT)
 }
 
-
 android {
     val nameSpace = "${GradleConfig.Android.applicationId}.store"
     namespace = nameSpace

@@ -1,6 +1,5 @@
 package com.tmdb.store.state
 
-
 data class AppState(
     val homeState: HomeFeatureState,
     val movieDetailsState: MovieDetailsFeatureState

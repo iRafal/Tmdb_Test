@@ -10,7 +10,6 @@ import com.tmdb.store.env.contract.AppEnv
 import com.tmdb.store.state.AppState
 import com.tmdb.store.state.HomeFeatureState
 
-
 class HomeFeatureSlice(
     private val homeFeatureEffects: HomeFeatureEffects
 ) : FeatureSlice<AppState, AppEnv, HomeFeatureState> {
@@ -37,10 +36,9 @@ private fun AppState.reduce(
     }
 }
 
-
 class HomeFeatureReducer(
     private val homeFeatureEffects: HomeFeatureEffects
-): FeatureReducer<AppState, AppEnv, HomeFeatureState> {
+) : FeatureReducer<AppState, AppEnv, HomeFeatureState> {
     override fun map(globalState: AppState, action: Action): Pair<HomeFeatureState, Effect<AppEnv>?> {
         return when (action) {
             is HomeAction -> globalState.reduce(action, homeFeatureEffects)

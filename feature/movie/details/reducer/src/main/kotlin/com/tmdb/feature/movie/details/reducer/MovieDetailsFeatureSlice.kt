@@ -10,7 +10,6 @@ import com.tmdb.store.env.contract.AppEnv
 import com.tmdb.store.state.AppState
 import com.tmdb.store.state.MovieDetailsFeatureState
 
-
 class MovieDetailsFeatureSlice : FeatureSlice<AppState, AppEnv, MovieDetailsFeatureState> {
     override val reducer: FeatureReducer<AppState, AppEnv, MovieDetailsFeatureState> =
         FeatureReducer { globalState: AppState, action: Action ->

@@ -1,4 +1,4 @@
 package com.tmdb.data.model
 
-//TODO implement
+// TODO implement
 class GenreDataModel
