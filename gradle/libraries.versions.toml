@@ -9,7 +9,7 @@ ktlint-plugin = "11.6.1"
 
 # https://github.com/pinterest/ktlint
 # https://github.com/jlleitschuh/ktlint-gradle
-ktlint = "0.50.0"
+ktlint = "1.0.1"
 
 # https://detekt.dev/docs/intro
 # https://github.com/detekt/detekt
@@ -104,7 +104,7 @@ hilt-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin"
 realm-plugin = { group = "io.realm", name = "realm-gradle-plugin", version.ref = "realm-plugin" }
 objectBox = { group = "io.objectbox", name = "objectbox-gradle-plugin", version.ref = "objectBox" }
 
-ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
+ktlint = { module = "com.pinterest.ktlint:ktlint-cli", version.ref = "ktlint" }
 detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 
 #KOTLIN
