@@ -34,15 +34,9 @@ android {
         sourceCompatibility = GradleConfig.javaVersion
         targetCompatibility = GradleConfig.javaVersion
     }
-    kotlinOptions {
-        jvmTarget = GradleConfig.javaVersionAsString
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.kotlin.compiler.extension.get()
-    }
+    kotlinOptions.jvmTarget = GradleConfig.javaVersionAsString
+    buildFeatures.compose = true
+    composeOptions.kotlinCompilerExtensionVersion = libs.versions.kotlin.compiler.extension.get()
     packaging {
         resources {
             this.excludes.addAll(GradleConfig.Android.excludePackagingResources)

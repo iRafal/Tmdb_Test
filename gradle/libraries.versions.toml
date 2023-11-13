@@ -35,7 +35,7 @@ dagger = "2.48.1"
 
 #KOTLIN
 kotlin = "1.9.20" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-kotlin-compiler-extension = "1.5.3" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+kotlin-compiler-extension = "1.5.4" # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 kotlin-coroutines = "1.7.3" # https://github.com/kotlin/kotlinx.coroutines
 kotlin-serialization-json = "1.6.0" # https://github.com/Kotlin/kotlinx.serialization
 
