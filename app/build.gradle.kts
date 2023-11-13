@@ -113,9 +113,7 @@ dependencies {
 
 fun DependencyHandlerScope.implementationDependencies() {
     implementation(project(":store:app-store"))
-    implementation(project(":data:source:local:contract"))
     implementation(project(":data:source:local:impl"))
-    implementation(project(":data:source:remote:contract"))
     implementation(project(":data:source:remote:impl-ktor"))
 
     implementation(project(":feature:home:ui"))

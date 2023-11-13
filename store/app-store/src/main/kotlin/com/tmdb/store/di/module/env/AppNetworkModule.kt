@@ -12,7 +12,6 @@ import dagger.Provides
 
 @Module
 object AppNetworkModule {
-
     @Provides
     fun appNetwork(
         discoverSource: DiscoverRemoteDataSource,

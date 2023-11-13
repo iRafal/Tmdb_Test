@@ -36,14 +36,18 @@ android {
 }
 
 dependencies {
+    apiDependencies()
     implementationDependencies()
     kapt(libs.dagger.compiler)
     testImplementation(libs.bundles.data.source.local.impl.test)
 }
 
+fun DependencyHandlerScope.apiDependencies() {
+    api(project(":data:source:local:contract"))
+}
+
 fun DependencyHandlerScope.implementationDependencies() {
     implementation(libs.dagger)
-    implementation(project(":data:source:local:contract"))
     implementation(project(":data:db:room"))
     implementation(project(":util"))
     implementation(libs.bundles.data.source.local.impl)
