@@ -1,6 +1,7 @@
 package com.tmdb.feature.home.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,7 +22,6 @@ import com.tmdb.feature.home.ui.data.model.HomeMovieSection.TOP_RATED
 import com.tmdb.feature.home.ui.data.model.HomeMovieSection.UPCOMING
 import com.tmdb.feature.home.ui.data.model.HomeUiData
 import com.tmdb.feature.home.ui.data.model.HomeUiData.Movie
-import com.tmdb.ui.core.compose.ScrollableColumn
 import com.tmdb.ui.core.data.UiState
 import com.tmdb.ui.core.theme.TmdbTheme
 import kotlinx.datetime.LocalDate
@@ -198,7 +198,7 @@ fun HomeContent(
     onReloadSection: (HomeMovieSection) -> Unit,
     onMovieClick: (movieId: Int) -> Unit
 ) {
-    ScrollableColumn(
+    Column(
         Modifier.padding(horizontal = 16.dp, vertical = 32.dp)
     ) {
         data.movieSections.forEach { (section, sectionState) ->
